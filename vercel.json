@@ -1,9 +1,8 @@
 {
   "rewrites": [
     {
-      "source": "/landing",
-      "destination": "/pages/landing.html",
-      "permanent": true
+      "source": "/landing/(.*)",
+      "destination": "/pages/landing.html"
     },
     {
       "source": "/index",
@@ -14,7 +13,7 @@
       "destination": "/pages/find/Q.html"
     },
     {
-      "source": "/landing/(.*)",
+      "source": "/landing",
       "destination": "/landing.html"
     }
   ]
