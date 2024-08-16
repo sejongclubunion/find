@@ -11,6 +11,10 @@
     {
       "source": "/find",
       "destination": "/pages/find/Q.html"
+    },
+    {
+      "source": "/landing/(.*)",
+      "destination": "/landing.html"
     }
   ]
 }
