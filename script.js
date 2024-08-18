@@ -57,20 +57,23 @@ function setInitialFilters() {
     const departmentFilters = document.getElementById('departmentFilters');
 
     if (currentUrl.includes('/volunteer')) {
-        selectDepartments(['봉사']);  // Volunteer 페이지에서 '환경'과 '교육' 필터 선택
+        selectDepartments(['봉사']);
     } else if (currentUrl.includes('/performance')) {
-        selectDepartments(['음악연주', '공연예술']);  // Performance 페이지에서 '음악'과 '연극' 필터 선택
+        selectDepartments(['음악연주', '공연예술']);
     } else if (currentUrl.includes('/culture')) {
-        selectDepartments(['문화', '창작예술']);  // Culture 페이지에서 '문화'와 '예술' 필터 선택
+        selectDepartments(['문화', '창작예술']);
     } else if (currentUrl.includes('/religion')) {
-        selectDepartments(['종교']);  // Religion 페이지에서 '종교'와 '봉사' 필터 선택
-    } else if (currentUrl.includes('/Academic')) {
-        selectDepartments(['학술교양', '정보과학']);  // Academic 페이지에서 '학술'과 '토론' 필터 선택
-    } else if (currentUrl.includes('/Physical')) {
-        selectDepartments(['생활체육', '무술체육', '구기체육']);  // Physical 페이지에서 '체육'과 '운동' 필터 선택
+        selectDepartments(['종교']);
+    } else if (currentUrl.includes('/academic')) {
+        selectDepartments(['학술교양', '정보과학']);
+    } else if (currentUrl.includes('/physical')) {
+        selectDepartments(['생활체육', '무술체육', '구기체육']);
+    } else {
+        // "모든 동아리 보기" 필터를 선택하기 위한 로직 추가
+        selectDepartments([]); // 아무것도 선택하지 않음으로써 모든 동아리가 표시되게 설정
     }
-    // 다른 URL에 대해서도 초기 필터를 설정할 수 있음
 }
+
 
 function selectDepartments(departments) {
     const departmentFilters = document.getElementById('departmentFilters');
