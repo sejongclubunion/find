@@ -1,4 +1,7 @@
-document.addEventListener('DOMContentLoaded', fetchNotionData);
+document.addEventListener('DOMContentLoaded', () => {
+    setInitialFilters(); // 페이지 로드 시 초기 필터 설정
+    fetchNotionData();
+});
 
 function calculateDaysLeft(startDate) {
     const today = new Date();
@@ -49,6 +52,34 @@ function showPopup(message) {
     document.body.appendChild(popup);
 }
 
+function setInitialFilters() {
+    const currentUrl = window.location.href;
+    const departmentFilters = document.getElementById('departmentFilters');
+
+    if (currentUrl.includes('/volunteer')) {
+        selectDepartments(['봉사']);  // Volunteer 페이지에서 '환경'과 '교육' 필터 선택
+    } else if (currentUrl.includes('/performance')) {
+        selectDepartments(['음악연주', '공연예술']);  // Performance 페이지에서 '음악'과 '연극' 필터 선택
+    } else if (currentUrl.includes('/culture')) {
+        selectDepartments(['문화', '창작예술']);  // Culture 페이지에서 '문화'와 '예술' 필터 선택
+    } else if (currentUrl.includes('/religion')) {
+        selectDepartments(['종교']);  // Religion 페이지에서 '종교'와 '봉사' 필터 선택
+    } else if (currentUrl.includes('/Academic')) {
+        selectDepartments(['학술교양', '정보과학']);  // Academic 페이지에서 '학술'과 '토론' 필터 선택
+    } else if (currentUrl.includes('/Physical')) {
+        selectDepartments(['생활체육', '무술체육', '구기체육']);  // Physical 페이지에서 '체육'과 '운동' 필터 선택
+    }
+    // 다른 URL에 대해서도 초기 필터를 설정할 수 있음
+}
+
+function selectDepartments(departments) {
+    const departmentFilters = document.getElementById('departmentFilters');
+    for (let i = 0; i < departmentFilters.options.length; i++) {
+        if (departments.includes(departmentFilters.options[i].value)) {
+            departmentFilters.options[i].selected = true;
+        }
+    }
+}
 
 async function fetchNotionData() {
     try {
@@ -82,11 +113,10 @@ async function fetchNotionData() {
         });
 
         const applicationFilterButton = document.getElementById('applicationFilterButton');
-        // const showAllClubsButton = document.getElementById('showAllClubsButton');
 
         function filterAndDisplayResults() {
             const onlyApplication = applicationFilterButton.classList.contains('active');
-            const selectedDepartment = departmentFilters.value;
+            const selectedDepartments = Array.from(departmentFilters.selectedOptions).map(option => option.value);
 
             notionList.innerHTML = '';
 
@@ -227,7 +257,7 @@ async function fetchNotionData() {
 
                 // 필터 조건 확인
                 const matchesApplicationFilter = !onlyApplication || applicationButton.textContent === '지원하기 !';
-                const matchesDepartmentFilter = !selectedDepartment || selectedDepartment === department;
+                const matchesDepartmentFilter = selectedDepartments.length === 0 || selectedDepartments.includes(department);
 
                 if (matchesApplicationFilter && matchesDepartmentFilter) {
                     notionList.appendChild(listItem);
@@ -239,12 +269,6 @@ async function fetchNotionData() {
             applicationFilterButton.classList.toggle('active');
             filterAndDisplayResults();
         });
-
-        // showAllClubsButton.addEventListener('click', () => {
-        //     departmentFilters.value = '';
-        //     applicationFilterButton.classList.remove('active');
-        //     filterAndDisplayResults();
-        // });
 
         departmentFilters.addEventListener('change', () => {
             filterAndDisplayResults();
