@@ -185,7 +185,6 @@ function filterAndDisplayResults(data) {
         const department = page.properties['세부 분과']?.rich_text?.[0]?.plain_text || 'No Department';
         console.log("Processing department:", department);
 
-        // 필터 조건 확인
         const matchesApplicationFilter = !onlyApplication || isTodayBetweenDates(page.properties['모집 시작일']?.date?.start, page.properties['모집 마감일']?.date?.start);
         const matchesDepartmentFilter = finalSelectedDepartments.length === 0 || finalSelectedDepartments.includes(department);
 
@@ -233,18 +232,25 @@ function filterAndDisplayResults(data) {
             const applicationButton = document.createElement('button');
             const applicationUrl = page.properties['신청방법']?.url || '#';
 
-            if (isTodayBetweenDates(startDate, endDate)) {
-                applicationButton.textContent = '지원하기 !';
-                applicationButton.style.backgroundColor = '#F2A0B0';
-                applicationButton.style.color = 'white';
-                applicationButton.onclick = () => window.open(applicationUrl, '_blank');
+            const daysLeft = calculateDaysLeft(endDate);
+            if (daysLeft >= 0) {
+                if (isTodayBetweenDates(startDate, endDate)) {
+                    applicationButton.textContent = '지원하기 !';
+                    applicationButton.style.backgroundColor = '#F2A0B0';
+                    applicationButton.style.color = 'white';
+                    applicationButton.onclick = () => window.open(applicationUrl, '_blank');
+                } else {
+                    applicationButton.textContent = `D-${daysLeft}`;
+                    applicationButton.style.backgroundColor = 'white';
+                    applicationButton.style.color = '#F2A0B0';
+                    applicationButton.style.border = '1px solid #F2A0B0';
+                    applicationButton.onclick = () => showPopup(`${daysLeft}일 뒤에 지원 가능합니다!`);
+                }
             } else {
-                const daysLeft = calculateDaysLeft(startDate);
-                applicationButton.textContent = `D-${daysLeft}`;
-                applicationButton.style.backgroundColor = 'white';
-                applicationButton.style.color = '#F2A0B0';
-                applicationButton.style.border = '1px solid #F2A0B0';
-                applicationButton.onclick = () => showPopup(`${daysLeft}일 뒤에 지원 가능합니다!`);
+                applicationButton.textContent = '모집마감';
+                applicationButton.style.backgroundColor = '#ccc';
+                applicationButton.style.color = '#666';
+                applicationButton.disabled = true; // 버튼 비활성화
             }
 
             const curriculum = document.createElement('div');
