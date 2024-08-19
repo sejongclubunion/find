@@ -70,7 +70,7 @@ function isTodayBetweenDates(startDate, endDate) {
     return today >= start && today <= end;
 }
 
-function showPopup(message) {
+function showPopup(message, clubName) {
     const popup = document.createElement('div');
     popup.className = 'popup';
     const popupContent = document.createElement('div');
@@ -80,27 +80,35 @@ function showPopup(message) {
     messageElement.textContent = message;
     popupContent.appendChild(messageElement);
 
-    const emailInput = document.createElement('input');
-    emailInput.type = 'email';
-    emailInput.placeholder = '총동아리연합회 카톡 채널을 추가하고 전화번호를 입력해주시면 카톡을 드릴게요!';
-    emailInput.className = 'email-input';
-    popupContent.appendChild(emailInput);
-
-    const kakaoLinkButton = document.createElement('button');
-    kakaoLinkButton.textContent = '카톡 채널 추가';
-    kakaoLinkButton.className = 'popup-button';
-    kakaoLinkButton.onclick = () => window.open('http://pf.kakao.com/_xjsxmXG', '_blank');
-    popupContent.appendChild(kakaoLinkButton);
+    // 전화번호 입력 칸 추가
+    const phoneInput = document.createElement('input');
+    phoneInput.type = 'tel';
+    phoneInput.placeholder = '총동아리연합회 카톡 채널을 추가하고 전화번호를 입력해주시면 카톡을 드릴게요!';
+    phoneInput.className = 'phone-input';
+    popupContent.appendChild(phoneInput);
 
     const closeButton = document.createElement('button');
     closeButton.textContent = '확인';
     closeButton.className = 'popup-button';
-    closeButton.onclick = () => document.body.removeChild(popup);
+    closeButton.onclick = async () => {
+        const phoneNumber = phoneInput.value;
+        console.log('Entered phone number:', phoneNumber); // 로그 추가
+        if (phoneNumber) {
+            const isSaved = await savePhoneNumber(clubName, phoneNumber);
+            if (isSaved) {
+                window.location.href = 'http://pf.kakao.com/_xjsxmXG';
+            } else {
+                alert('전화번호 저장에 실패했습니다.');
+            }
+        }
+        document.body.removeChild(popup);
+    };
     popupContent.appendChild(closeButton);
 
     popup.appendChild(popupContent);
     document.body.appendChild(popup);
 }
+
 
 async function fetchNotionData() {
     try {
