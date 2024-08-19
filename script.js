@@ -109,6 +109,30 @@ function showPopup(message, clubName) {
     document.body.appendChild(popup);
 }
 
+async function savePhoneNumber(clubName, phoneNumber) {
+    console.log('savePhoneNumber function called');
+    const pageUrl = window.location.href; // 현재 페이지 URL 가져오기
+    try {
+        const response = await fetch('/api/savePhoneNumber', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ clubName, phoneNumber, pageUrl })
+        });
+        if (response.ok) {
+            console.log('Phone number saved successfully');
+            return true;
+        } else {
+            const errorText = await response.text();
+            console.error('Failed to save phone number:', errorText);
+            return false;
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        return false;
+    }
+}
 
 async function fetchNotionData() {
     try {
