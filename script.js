@@ -1,4 +1,30 @@
-document.addEventListener('DOMContentLoaded', fetchNotionData);
+document.addEventListener('DOMContentLoaded', () => {
+    setInitialFilters(); // 페이지 로드 시 초기 필터 설정
+    fetchNotionData();  // 데이터를 가져와서 화면에 표시
+});
+
+function setInitialFilters() {
+    const currentUrl = window.location.href;
+    const departmentFilters = document.getElementById('departmentFilters');
+
+    // 특정 URL에 따라 필터를 자동으로 선택
+    if (currentUrl.includes('/culture')) {
+        selectDepartments(['창작예술', '문화']);  // Culture 페이지에서 '창작예술'과 '문화' 필터 선택
+    }
+}
+
+function selectDepartments(departments) {
+    const departmentFilters = document.getElementById('departmentFilters');
+
+    // 모든 옵션을 초기화하고, 선택된 필터를 선택 상태로 만듭니다.
+    for (let i = 0; i < departmentFilters.options.length; i++) {
+        if (departments.includes(departmentFilters.options[i].value)) {
+            departmentFilters.options[i].selected = true;
+        } else {
+            departmentFilters.options[i].selected = false;
+        }
+    }
+}
 
 function calculateDaysLeft(startDate) {
     const today = new Date();
@@ -49,7 +75,6 @@ function showPopup(message) {
     document.body.appendChild(popup);
 }
 
-
 async function fetchNotionData() {
     try {
         const response = await fetch('/api/fetchNotionData');
@@ -82,11 +107,10 @@ async function fetchNotionData() {
         });
 
         const applicationFilterButton = document.getElementById('applicationFilterButton');
-        // const showAllClubsButton = document.getElementById('showAllClubsButton');
 
         function filterAndDisplayResults() {
             const onlyApplication = applicationFilterButton.classList.contains('active');
-            const selectedDepartment = departmentFilters.value;
+            const selectedDepartments = Array.from(departmentFilters.selectedOptions).map(option => option.value);
 
             notionList.innerHTML = '';
 
@@ -227,7 +251,7 @@ async function fetchNotionData() {
 
                 // 필터 조건 확인
                 const matchesApplicationFilter = !onlyApplication || applicationButton.textContent === '지원하기 !';
-                const matchesDepartmentFilter = !selectedDepartment || selectedDepartment === department;
+                const matchesDepartmentFilter = selectedDepartments.length === 0 || selectedDepartments.includes(department);
 
                 if (matchesApplicationFilter && matchesDepartmentFilter) {
                     notionList.appendChild(listItem);
@@ -239,12 +263,6 @@ async function fetchNotionData() {
             applicationFilterButton.classList.toggle('active');
             filterAndDisplayResults();
         });
-
-        // showAllClubsButton.addEventListener('click', () => {
-        //     departmentFilters.value = '';
-        //     applicationFilterButton.classList.remove('active');
-        //     filterAndDisplayResults();
-        // });
 
         departmentFilters.addEventListener('change', () => {
             filterAndDisplayResults();

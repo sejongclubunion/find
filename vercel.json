@@ -15,6 +15,10 @@
     {
       "source": "/landing",
       "destination": "/landing.html"
+    },
+    {
+      "source": "/culture",
+      "destination": "/pages/culture.html"
     }
   ]
 }
