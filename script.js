@@ -81,7 +81,7 @@ function showPopup(message, clubName, startDate, endDate) {
 
     // 추가된 작은 글씨 (줄 바꿈 반영)
     const infoElement = document.createElement('p');
-    infoElement.innerHTML = '전화번호를 입력해주시면 모집 시작일에 알림을 드릴게요!<br>카톡채널을 추가해야합니다';
+    infoElement.innerHTML = '전화번호를 입력해주시면 모집 시작일에 알림을 드릴게요!';
     infoElement.className = 'info-text';
     popupContent.appendChild(infoElement);
 
@@ -280,35 +280,26 @@ function createListItem(page) {
     const period = document.createElement('p');
     period.textContent = `모집 기간: ${startDate} ~ ${endDate}`;
 
-    const applicationUrl = page.properties['신청방법']?.url || '';
+    const applicationButton = document.createElement('button');
+    const applicationUrl = page.properties['신청방법']?.url || '#';
 
-    if (applicationUrl) {
-        const applicationButton = document.createElement('button');
-        const daysLeft = calculateDaysLeft(startDate);
-
-        if (isTodayBetweenDates(startDate, endDate)) {
-            applicationButton.textContent = '지원하기 !';
-            applicationButton.style.backgroundColor = '#F2A0B0';
-            applicationButton.style.color = 'white';
-            applicationButton.onclick = () => window.open(applicationUrl, '_blank');
-        } else if (daysLeft < 0) {
-            applicationButton.textContent = '모집마감';
-            applicationButton.style.backgroundColor = '#f2f2f2';
-            applicationButton.style.color = '#999';
-            applicationButton.disabled = true;
-        } else {
-            applicationButton.textContent = `D-${daysLeft}`;
-            applicationButton.style.backgroundColor = 'white';
-            applicationButton.style.color = '#F2A0B0';
-            applicationButton.style.border = '1px solid #F2A0B0';
-            applicationButton.onclick = () => showPopup(`${daysLeft}일 뒤에 지원 가능합니다!`, clubName.textContent, startDate, endDate);
-        }
-
-        const actionContainer = document.createElement('div');
-        actionContainer.className = 'action-container';
-        actionContainer.appendChild(applicationButton);
-
-        listItemContent.appendChild(actionContainer);
+    const daysLeft = calculateDaysLeft(startDate);
+    if (isTodayBetweenDates(startDate, endDate)) {
+        applicationButton.textContent = '지원하기 !';
+        applicationButton.style.backgroundColor = '#F2A0B0';
+        applicationButton.style.color = 'white';
+        applicationButton.onclick = () => window.open(applicationUrl, '_blank');
+    } else if (daysLeft < 0) {
+        applicationButton.textContent = '모집마감';
+        applicationButton.style.backgroundColor = '#f2f2f2';
+        applicationButton.style.color = '#999';
+        applicationButton.disabled = true;
+    } else {
+        applicationButton.textContent = `D-${daysLeft}`;
+        applicationButton.style.backgroundColor = 'white';
+        applicationButton.style.color = '#F2A0B0';
+        applicationButton.style.border = '1px solid #F2A0B0';
+        applicationButton.onclick = () => showPopup(`${daysLeft}일 뒤에 지원 가능합니다!`, clubName.textContent, startDate, endDate);
     }
 
     const curriculum = document.createElement('div');
@@ -373,7 +364,13 @@ function createListItem(page) {
     listItemContent.appendChild(representative);
     listItemContent.appendChild(address);
     listItemContent.appendChild(period);
-    listItemContent.appendChild(curriculum);
+
+    const actionContainer = document.createElement('div');
+    actionContainer.className = 'action-container';
+    actionContainer.appendChild(applicationButton);
+    actionContainer.appendChild(curriculum);
+
+    listItemContent.appendChild(actionContainer);
 
     listItem.appendChild(logoImg);
     listItem.appendChild(listItemContent);
