@@ -433,10 +433,10 @@ button:hover {
     align-items: center;
     margin-top: 20px;
     flex-wrap: wrap; /* 버튼이 줄 바꿈될 수 있도록 설정 */
-    margin-bottom: 20px; /* button-container의 하단에 여유 공간 추가 */
+    margin-bottom: 30px; /* button-container의 하단에 여유 공간 추가 */
 }
 .view-all-button {
-    margin-top: 20px; /* view-all-button의 상단에 여유 공간 추가 */
+    margin-top: 30px; /* view-all-button의 상단에 여유 공간 추가 */
 }
 
 .button-container > .download-button {
