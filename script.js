@@ -11,7 +11,7 @@ function setInitialFilters() {
     // 특정 URL에 따라 필터를 자동으로 선택
     if (currentUrl.includes('/culture')) {
         console.log("Setting filters for culture page");
-        selectDepartments(['창작예술', '문화']);  // Culture 페이지에서 '창작예술'과 '문화' 필터 선택
+        selectDepartments(['문화', '학술교양']);  // Culture 페이지에서 '문화'와 '학술교양' 필터 선택
     }
 }
 
@@ -20,10 +20,9 @@ function selectDepartments(departments) {
 
     // 필터 옵션이 로드되었는지 확인하고, 로드된 후에 선택하도록 설정
     if (departmentFilters && departmentFilters.options.length > 0) {
-        // 모든 옵션을 초기화하고, 선택된 필터를 선택 상태로 만듭니다.
+        // 선택된 필터를 선택 상태로 만듭니다.
         for (let i = 0; i < departmentFilters.options.length; i++) {
-            departmentFilters.options[i].selected = departments.includes(departmentFilters.options[i].value);
-            if (departmentFilters.options[i].selected) {
+            if (departments.includes(departmentFilters.options[i].value)) {
                 console.log("Selected department:", departmentFilters.options[i].value); // 선택된 필터 확인
             }
         }
@@ -131,9 +130,7 @@ async function fetchNotionData() {
 function filterAndDisplayResults() {
     const onlyApplication = document.getElementById('applicationFilterButton').classList.contains('active');
     const departmentFilters = document.getElementById('departmentFilters');
-    const selectedDepartments = Array.from(departmentFilters.selectedOptions)
-        .map(option => option.value)
-        .filter(value => value); // 빈 값 제거
+    const selectedDepartments = ['문화', '학술교양']; // 초기 필터 설정
 
     console.log("Selected Departments:", selectedDepartments); // 선택된 필터를 출력
 
@@ -149,7 +146,7 @@ function filterAndDisplayResults() {
 
                 // 필터 조건 확인
                 const matchesApplicationFilter = !onlyApplication || page.properties['신청방법']?.url;
-                const matchesDepartmentFilter = selectedDepartments.length === 0 || selectedDepartments.includes(department);
+                const matchesDepartmentFilter = selectedDepartments.includes(department);
 
                 console.log("matchesApplicationFilter:", matchesApplicationFilter);
                 console.log("matchesDepartmentFilter:", matchesDepartmentFilter);
