@@ -10,12 +10,9 @@ function setInitialFilters() {
 
     if (currentUrl.includes('/culture')) {
         console.log("Setting filters for culture page");
-        // 필터의 값을 'culture'로 설정 (1회성)
-        const cultureOption = document.createElement('option');
-        cultureOption.value = 'culture';
-        cultureOption.textContent = 'Culture';
-        cultureOption.selected = true;
-        departmentFilters.insertBefore(cultureOption, departmentFilters.firstChild);
+
+        // 'culture' 필터를 선택 상태로 설정
+        departmentFilters.value = 'culture';
 
         // 학술교양과 문화 필터를 선택 상태로 만듦
         selectDepartments(['문화', '학술교양']);
@@ -26,11 +23,10 @@ function selectDepartments(departments) {
     const departmentFilters = document.getElementById('departmentFilters');
 
     if (departmentFilters && departmentFilters.options.length > 0) {
-        // 모든 옵션을 초기화하고, 선택된 필터를 선택 상태로 만듭니다.
         for (let i = 0; i < departmentFilters.options.length; i++) {
             departmentFilters.options[i].selected = departments.includes(departmentFilters.options[i].value);
             if (departmentFilters.options[i].selected) {
-                console.log("Selected department:", departmentFilters.options[i].value); // 선택된 필터 확인
+                console.log("Selected department:", departmentFilters.options[i].value);
             }
         }
     } else {
@@ -138,18 +134,15 @@ async function fetchNotionData() {
 function filterAndDisplayResults() {
     const onlyApplication = document.getElementById('applicationFilterButton').classList.contains('active');
     const departmentFilters = document.getElementById('departmentFilters');
-    let selectedDepartments = Array.from(departmentFilters.selectedOptions)
+    const selectedDepartments = Array.from(departmentFilters.selectedOptions)
         .map(option => option.value)
-        .filter(value => value); // 빈 값 제거
+        .filter(value => value);
 
-    // "모든 동아리"를 선택하면 전체 동아리를 표시하도록 설정
-    if (selectedDepartments.length === 0 || selectedDepartments.includes('culture')) {
-        selectedDepartments = []; // 모든 동아리 선택 시 필터 해제
-    } else if (selectedDepartments.length === 0) {
-        selectedDepartments = ['문화', '학술교양']; // 초기 필터 설정
-    }
+    // "culture" 필터를 선택한 경우 학술교양 또는 문화 동아리만 표시
+    const isCultureFilterSelected = selectedDepartments.includes('culture');
+    const finalSelectedDepartments = isCultureFilterSelected ? ['학술교양', '문화'] : selectedDepartments;
 
-    console.log("Selected Departments:", selectedDepartments); // 선택된 필터를 출력
+    console.log("Selected Departments:", finalSelectedDepartments);
 
     const notionList = document.querySelector('#notionList');
     notionList.innerHTML = '';
@@ -159,11 +152,11 @@ function filterAndDisplayResults() {
         .then(data => {
             data.results.forEach(page => {
                 const department = page.properties['세부 분과']?.rich_text?.[0]?.plain_text || 'No Department';
-                console.log("Processing department:", department); // 필터링되는 각 동아리의 분과 확인
+                console.log("Processing department:", department);
 
                 // 필터 조건 확인
                 const matchesApplicationFilter = !onlyApplication || page.properties['신청방법']?.url;
-                const matchesDepartmentFilter = selectedDepartments.length === 0 || selectedDepartments.includes(department);
+                const matchesDepartmentFilter = finalSelectedDepartments.length === 0 || finalSelectedDepartments.includes(department);
 
                 console.log("matchesApplicationFilter:", matchesApplicationFilter);
                 console.log("matchesDepartmentFilter:", matchesDepartmentFilter);
