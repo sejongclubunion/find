@@ -114,16 +114,35 @@ async function fetchNotionData() {
 
         const applicationFilterButton = document.getElementById('applicationFilterButton');
 
-        function filterAndDisplayResults() {
-            const onlyApplication = applicationFilterButton.classList.contains('active');
-            const selectedDepartments = Array.from(departmentFilters.selectedOptions)
-                .map(option => option.value)
-                .filter(value => value); // 빈 값 제거
+        departmentFilters.addEventListener('change', () => {
+            filterAndDisplayResults();
+        });
 
-            console.log("Selected Departments:", selectedDepartments); // 선택된 필터를 출력
+        applicationFilterButton.addEventListener('click', () => {
+            applicationFilterButton.classList.toggle('active');
+            filterAndDisplayResults();
+        });
 
-            notionList.innerHTML = '';
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    }
+}
 
+function filterAndDisplayResults() {
+    const onlyApplication = document.getElementById('applicationFilterButton').classList.contains('active');
+    const departmentFilters = document.getElementById('departmentFilters');
+    const selectedDepartments = Array.from(departmentFilters.selectedOptions)
+        .map(option => option.value)
+        .filter(value => value); // 빈 값 제거
+
+    console.log("Selected Departments:", selectedDepartments); // 선택된 필터를 출력
+
+    const notionList = document.querySelector('#notionList');
+    notionList.innerHTML = '';
+
+    fetch('/api/fetchNotionData')
+        .then(response => response.json())
+        .then(data => {
             data.results.forEach(page => {
                 const department = page.properties['세부 분과']?.rich_text?.[0]?.plain_text || 'No Department';
                 console.log("Processing department:", department); // 필터링되는 각 동아리의 분과 확인
@@ -137,7 +156,7 @@ async function fetchNotionData() {
 
                 if (matchesApplicationFilter && matchesDepartmentFilter) {
                     console.log("Adding club to list:", page.properties['동아리명']?.title?.[0]?.plain_text || 'No Name');
-                    
+
                     const listItem = document.createElement('div');
                     listItem.className = 'list-item';
 
@@ -272,18 +291,8 @@ async function fetchNotionData() {
                     console.log("Club not added due to filter mismatch:", page.properties['동아리명']?.title?.[0]?.plain_text || 'No Name');
                 }
             });
-        }
-
-        applicationFilterButton.addEventListener('click', () => {
-            applicationFilterButton.classList.toggle('active');
-            filterAndDisplayResults();
+        })
+        .catch(error => {
+            console.error('Error filtering data:', error);
         });
-
-        departmentFilters.addEventListener('change', () => {
-            filterAndDisplayResults();
-        });
-
-    } catch (error) {
-        console.error('Error fetching data:', error);
-    }
 }
