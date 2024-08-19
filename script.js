@@ -97,7 +97,7 @@ function showPopup(message, clubName, startDate, endDate) {
     phoneInput.type = 'tel';
     phoneInput.placeholder = '010-0000-0000';
     phoneInput.className = 'phone-input';
-    phoneInput.style.color = 'lightgrey';  // 텍스트 색상을 lightgrey로 설정
+    phoneInput.style.color = '#d3d3d3';  // 더 옅은 회색으로 텍스트 색상 설정
     popupContent.appendChild(phoneInput);
 
     const closeButton = document.createElement('button');
