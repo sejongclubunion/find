@@ -15,6 +15,10 @@ function setInitialFilters() {
         addAndSelectFilter(departmentFilters, 'physical', 'Physical (생활체육, 무술체육, 구기체육)', ['생활체육', '무술체육', '구기체육']);
     } else if (currentUrl.includes('/performance')) {
         addAndSelectFilter(departmentFilters, 'performance', 'Performance (공연예술, 음악연주)', ['공연예술', '음악연주']);
+    } else if (currentUrl.includes('/religion')) {
+        addAndSelectFilter(departmentFilters, 'religion', 'Religion (종교)', ['종교']);
+    } else if (currentUrl.includes('/volunteer')) {
+        addAndSelectFilter(departmentFilters, 'volunteer', 'Volunteer (봉사)', ['봉사']);
     }
 }
 
@@ -151,6 +155,10 @@ function filterAndDisplayResults(data) {
         finalSelectedDepartments = ['생활체육', '무술체육', '구기체육'];
     } else if (selectedDepartments.includes('performance')) {
         finalSelectedDepartments = ['공연예술', '음악연주'];
+    } else if (selectedDepartments.includes('religion')) {
+        finalSelectedDepartments = ['종교'];
+    } else if (selectedDepartments.includes('volunteer')) {
+        finalSelectedDepartments = ['봉사'];
     }
 
     console.log("Selected Departments:", finalSelectedDepartments);

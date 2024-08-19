@@ -31,6 +31,14 @@
     {
       "source": "/academic",
       "destination": "/pages/academic.html"
+    },
+    {
+      "source": "/religion",
+      "destination": "/pages/religion.html"
+    },
+    {
+      "source": "/volunteer",
+      "destination": "/pages/volunteer.html"
     }
   ]
 }
