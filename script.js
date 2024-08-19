@@ -3,6 +3,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     await fetchNotionData(); // 데이터를 가져오고 필터 적용
 });
 
+// 새로운 함수를 추가합니다.
+function selectExistingFilter(departmentFilters, department) {
+    const existingOption = Array.from(departmentFilters.options).find(option => option.value === department);
+    if (existingOption) {
+        existingOption.selected = true;
+        console.log(`Existing filter automatically selected: ${department}`);
+    }
+}
+
 function setInitialFilters() {
     const currentUrl = window.location.href;
     const departmentFilters = document.getElementById('departmentFilters');
@@ -16,11 +25,12 @@ function setInitialFilters() {
     } else if (currentUrl.includes('/performance')) {
         addAndSelectFilter(departmentFilters, 'performance', 'Performance (공연예술, 음악연주)', ['공연예술', '음악연주']);
     } else if (currentUrl.includes('/religion')) {
-        addAndSelectFilter(departmentFilters, 'religion', 'Religion (종교)', ['종교']);
+        selectExistingFilter(departmentFilters, '종교');
     } else if (currentUrl.includes('/volunteer')) {
-        addAndSelectFilter(departmentFilters, 'volunteer', 'Volunteer (봉사)', ['봉사']);
+        selectExistingFilter(departmentFilters, '봉사');
     }
 }
+
 
 function addAndSelectFilter(departmentFilters, filterValue, filterText, associatedDepartments) {
     const existingOption = Array.from(departmentFilters.options).find(option => option.value === filterValue);
