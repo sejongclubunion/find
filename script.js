@@ -186,7 +186,7 @@ function filterAndDisplayResults(data) {
         console.log("Processing department:", department);
 
         // 필터 조건 확인
-        const matchesApplicationFilter = !onlyApplication || page.properties['신청방법']?.url;
+        const matchesApplicationFilter = !onlyApplication || isTodayBetweenDates(page.properties['모집 시작일']?.date?.start, page.properties['모집 마감일']?.date?.start);
         const matchesDepartmentFilter = finalSelectedDepartments.length === 0 || finalSelectedDepartments.includes(department);
 
         console.log("matchesApplicationFilter:", matchesApplicationFilter);
