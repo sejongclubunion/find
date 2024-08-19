@@ -3,11 +3,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     setInitialFilters(); // 페이지 로드 시 초기 필터 설정
 });
 
+// 새로운 함수를 추가합니다.
 function selectExistingFilter(departmentFilters, department) {
     const existingOption = Array.from(departmentFilters.options).find(option => option.value === department);
     if (existingOption) {
         existingOption.selected = true;
         console.log(`Existing filter automatically selected: ${department}`);
+        departmentFilters.dispatchEvent(new Event('change')); // 필터 변경 이벤트를 트리거
     }
 }
 
@@ -49,6 +51,7 @@ function addAndSelectFilter(departmentFilters, filterValue, filterText, associat
         departmentFilters.dataset.selectedDepartments = JSON.stringify(associatedDepartments);
         console.log(`${filterText} filter already exists and is selected`);
     }
+    departmentFilters.dispatchEvent(new Event('change')); // 필터 변경 이벤트를 트리거
 }
 
 function calculateDaysLeft(startDate) {
