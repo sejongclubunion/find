@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', async () => {
     setInitialFilters(); // 페이지 로드 시 초기 필터 설정
-    await fetchNotionData(); // 데이터를 가져온 후
-    filterAndDisplayResults(); // 필터링된 데이터를 화면에 표시
+    await fetchNotionData(); // 데이터를 가져오고 필터 적용
 });
 
 function setInitialFilters() {
@@ -107,23 +106,23 @@ async function fetchNotionData() {
         const applicationFilterButton = document.getElementById('applicationFilterButton');
 
         departmentFilters.addEventListener('change', () => {
-            filterAndDisplayResults(); // 필터가 변경되면 결과를 갱신
+            filterAndDisplayResults(data); // 필터가 변경되면 결과를 갱신
         });
 
         applicationFilterButton.addEventListener('click', () => {
             applicationFilterButton.classList.toggle('active');
-            filterAndDisplayResults();
+            filterAndDisplayResults(data);
         });
 
         // 초기 필터 설정 후 필터링 결과 표시
-        filterAndDisplayResults();
+        filterAndDisplayResults(data);
 
     } catch (error) {
         console.error('Error fetching data:', error);
     }
 }
 
-function filterAndDisplayResults() {
+function filterAndDisplayResults(data) {
     const onlyApplication = document.getElementById('applicationFilterButton').classList.contains('active');
     const departmentFilters = document.getElementById('departmentFilters');
     const selectedDepartments = Array.from(departmentFilters.selectedOptions)
@@ -139,160 +138,153 @@ function filterAndDisplayResults() {
     console.log("Selected Departments:", finalSelectedDepartments);
 
     const notionList = document.querySelector('#notionList');
-    notionList.innerHTML = '';
+    notionList.innerHTML = ''; // 중복 방지를 위해 리스트 초기화
 
-    fetch('/api/fetchNotionData')
-        .then(response => response.json())
-        .then(data => {
-            data.results.forEach(page => {
-                const department = page.properties['세부 분과']?.rich_text?.[0]?.plain_text || 'No Department';
-                console.log("Processing department:", department);
+    data.results.forEach(page => {
+        const department = page.properties['세부 분과']?.rich_text?.[0]?.plain_text || 'No Department';
+        console.log("Processing department:", department);
 
-                // 필터 조건 확인
-                const matchesApplicationFilter = !onlyApplication || page.properties['신청방법']?.url;
-                const matchesDepartmentFilter = finalSelectedDepartments.length === 0 || finalSelectedDepartments.includes(department);
+        // 필터 조건 확인
+        const matchesApplicationFilter = !onlyApplication || page.properties['신청방법']?.url;
+        const matchesDepartmentFilter = finalSelectedDepartments.length === 0 || finalSelectedDepartments.includes(department);
 
-                console.log("matchesApplicationFilter:", matchesApplicationFilter);
-                console.log("matchesDepartmentFilter:", matchesDepartmentFilter);
+        console.log("matchesApplicationFilter:", matchesApplicationFilter);
+        console.log("matchesDepartmentFilter:", matchesDepartmentFilter);
 
-                if (matchesApplicationFilter && matchesDepartmentFilter) {
-                    console.log("Adding club to list:", page.properties['동아리명']?.title?.[0]?.plain_text || 'No Name');
+        if (matchesApplicationFilter && matchesDepartmentFilter) {
+            console.log("Adding club to list:", page.properties['동아리명']?.title?.[0]?.plain_text || 'No Name');
 
-                    const listItem = document.createElement('div');
-                    listItem.className = 'list-item';
+            const listItem = document.createElement('div');
+            listItem.className = 'list-item';
 
-                    const logoImg = document.createElement('img');
-                    const logoUrl = page.properties['로고']?.files?.[0]?.external?.url || '';
-                    if (logoUrl) {
-                        logoImg.src = logoUrl;
-                    } else {
-                        logoImg.alt = 'No logo';
+            const logoImg = document.createElement('img');
+            const logoUrl = page.properties['로고']?.files?.[0]?.external?.url || '';
+            if (logoUrl) {
+                logoImg.src = logoUrl;
+            } else {
+                logoImg.alt = 'No logo';
+            }
+
+            const listItemContent = document.createElement('div');
+            listItemContent.className = 'list-item-content';
+
+            const clubName = document.createElement('h2');
+            clubName.textContent = page.properties['동아리명']?.title?.[0]?.plain_text || 'No Name';
+
+            const departmentBox = document.createElement('div');
+            departmentBox.className = 'department-box';
+            departmentBox.textContent = department;
+
+            const description = document.createElement('p');
+            description.textContent = page.properties['한줄소개']?.rich_text?.[0]?.plain_text || 'No Description';
+
+            const representative = document.createElement('p');
+            representative.textContent = `대표자 성함: ${page.properties['대표자 성함']?.rich_text?.[0]?.plain_text || 'N/A'}`;
+
+            const address = document.createElement('p');
+            address.textContent = `동아리방 주소: ${page.properties['동아리방 주소']?.rich_text?.[0]?.plain_text || 'N/A'}`;
+
+            const startDate = page.properties['모집 시작일']?.date?.start || 'N/A';
+            const endDate = page.properties['모집 마감일']?.date?.start || 'N/A';
+            const period = document.createElement('p');
+            period.textContent = `모집 기간: ${startDate} ~ ${endDate}`;
+
+            const applicationButton = document.createElement('button');
+            const applicationUrl = page.properties['신청방법']?.url || '#';
+
+            if (isTodayBetweenDates(startDate, endDate)) {
+                applicationButton.textContent = '지원하기 !';
+                applicationButton.style.backgroundColor = '#F2A0B0';
+                applicationButton.style.color = 'white';
+                applicationButton.onclick = () => window.open(applicationUrl, '_blank');
+            } else {
+                const daysLeft = calculateDaysLeft(startDate);
+                applicationButton.textContent = `D-${daysLeft}`;
+                applicationButton.style.backgroundColor = 'white';
+                applicationButton.style.color = '#F2A0B0';
+                applicationButton.style.border = '1px solid #F2A0B0';
+                applicationButton.onclick = () => showPopup(`${daysLeft}일 뒤에 지원 가능합니다!`);
+            }
+
+            const curriculum = document.createElement('div');
+            curriculum.className = 'curriculum-bar-container';
+            const curriculumBar = document.createElement('div');
+            curriculumBar.className = 'curriculum-bar';
+
+            const curriculumText = page.properties['커리큘럼']?.rich_text?.[0]?.plain_text || 'N/A';
+
+            const curriculumItems = curriculumText.split('\n');
+            const months = ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'];
+            let monthDetails = {};
+
+            curriculumItems.forEach(item => {
+                const month = months.find(m => item.startsWith(m));
+                if (month) {
+                    if (!monthDetails[month]) {
+                        monthDetails[month] = [];
                     }
-
-                    const listItemContent = document.createElement('div');
-                    listItemContent.className = 'list-item-content';
-
-                    const clubName = document.createElement('h2');
-                    clubName.textContent = page.properties['동아리명']?.title?.[0]?.plain_text || 'No Name';
-
-                    const departmentBox = document.createElement('div');
-                    departmentBox.className = 'department-box';
-                    departmentBox.textContent = department;
-
-                    const description = document.createElement('p');
-                    description.textContent = page.properties['한줄소개']?.rich_text?.[0]?.plain_text || 'No Description';
-
-                    const representative = document.createElement('p');
-                    representative.textContent = `대표자 성함: ${page.properties['대표자 성함']?.rich_text?.[0]?.plain_text || 'N/A'}`;
-
-                    const address = document.createElement('p');
-                    address.textContent = `동아리방 주소: ${page.properties['동아리방 주소']?.rich_text?.[0]?.plain_text || 'N/A'}`;
-
-                    const startDate = page.properties['모집 시작일']?.date?.start || 'N/A';
-                    const endDate = page.properties['모집 마감일']?.date?.start || 'N/A';
-                    const period = document.createElement('p');
-                    period.textContent = `모집 기간: ${startDate} ~ ${endDate}`;
-
-                    const applicationButton = document.createElement('button');
-                    const applicationUrl = page.properties['신청방법']?.url || '#';
-
-                    if (isTodayBetweenDates(startDate, endDate)) {
-                        applicationButton.textContent = '지원하기 !';
-                        applicationButton.style.backgroundColor = '#F2A0B0';
-                        applicationButton.style.color = 'white';
-                        applicationButton.onclick = () => window.open(applicationUrl, '_blank');
-                    } else {
-                        const daysLeft = calculateDaysLeft(startDate);
-                        applicationButton.textContent = `D-${daysLeft}`;
-                        applicationButton.style.backgroundColor = 'white';
-                        applicationButton.style.color = '#F2A0B0';
-                        applicationButton.style.border = '1px solid #F2A0B0';
-                        applicationButton.onclick = () => showPopup(`${daysLeft}일 뒤에 지원 가능합니다!`);
-                    }
-
-                    const curriculum = document.createElement('div');
-                    curriculum.className = 'curriculum-bar-container';
-                    const curriculumBar = document.createElement('div');
-                    curriculumBar.className = 'curriculum-bar';
-
-                    const curriculumText = page.properties['커리큘럼']?.rich_text?.[0]?.plain_text || 'N/A';
-
-                    const curriculumItems = curriculumText.split('\n');
-                    const months = ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'];
-                    let monthDetails = {};
-
-                    curriculumItems.forEach(item => {
-                        const month = months.find(m => item.startsWith(m));
-                        if (month) {
-                            if (!monthDetails[month]) {
-                                monthDetails[month] = [];
-                            }
-                            monthDetails[month].push(item.trim());
-                        }
-                    });
-
-                    const activeMonths = months.filter(month => monthDetails[month]);
-
-                    activeMonths.forEach((month, index) => {
-                        const monthPoint = document.createElement('div');
-                        monthPoint.className = 'month-point';
-                        monthPoint.textContent = month.slice(0, -1);
-
-                        let leftPosition = (index / (activeMonths.length - 1)) * 100;
-
-                        if (index === activeMonths.length - 1) {
-                            leftPosition -= 2;
-                        }
-
-                        monthPoint.style.left = `${leftPosition}%`;
-
-                        const detailDiv = document.createElement('div');
-                        detailDiv.className = 'month-detail';
-                        detailDiv.innerHTML = monthDetails[month].join('<br>');
-
-                        monthPoint.appendChild(detailDiv);
-                        curriculumBar.appendChild(monthPoint);
-
-                        if (window.innerWidth <= 600) {
-                            monthPoint.addEventListener('click', () => {
-                                detailDiv.style.display = 'block';
-                                setTimeout(() => {
-                                    detailDiv.classList.add('fade-out');
-                                    setTimeout(() => {
-                                        detailDiv.style.display = 'none';
-                                        detailDiv.classList.remove('fade-out');
-                                    }, 500);
-                                }, 1300);
-                            });
-                        }
-                    });
-
-                    curriculum.appendChild(curriculumBar);
-
-                    listItemContent.appendChild(clubName);
-                    listItemContent.appendChild(departmentBox);
-                    listItemContent.appendChild(description);
-                    listItemContent.appendChild(representative);
-                    listItemContent.appendChild(address);
-                    listItemContent.appendChild(period);
-
-                    const actionContainer = document.createElement('div');
-                    actionContainer.className = 'action-container';
-                    actionContainer.appendChild(applicationButton);
-                    actionContainer.appendChild(curriculum);
-
-                    listItemContent.appendChild(actionContainer);
-
-                    listItem.appendChild(logoImg);
-                    listItem.appendChild(listItemContent);
-
-                    notionList.appendChild(listItem);
-                } else {
-                    console.log("Club not added due to filter mismatch:", page.properties['동아리명']?.title?.[0]?.plain_text || 'No Name');
+                    monthDetails[month].push(item.trim());
                 }
             });
-        })
-        .catch(error => {
-            console.error('Error filtering data:', error);
-        });
+
+            const activeMonths = months.filter(month => monthDetails[month]);
+
+            activeMonths.forEach((month, index) => {
+                const monthPoint = document.createElement('div');
+                monthPoint.className = 'month-point';
+                monthPoint.textContent = month.slice(0, -1);
+
+                let leftPosition = (index / (activeMonths.length - 1)) * 100;
+
+                if (index === activeMonths.length - 1) {
+                    leftPosition -= 2;
+                }
+
+                monthPoint.style.left = `${leftPosition}%`;
+
+                const detailDiv = document.createElement('div');
+                detailDiv.className = 'month-detail';
+                detailDiv.innerHTML = monthDetails[month].join('<br>');
+
+                monthPoint.appendChild(detailDiv);
+                curriculumBar.appendChild(monthPoint);
+
+                if (window.innerWidth <= 600) {
+                    monthPoint.addEventListener('click', () => {
+                        detailDiv.style.display = 'block';
+                        setTimeout(() => {
+                            detailDiv.classList.add('fade-out');
+                            setTimeout(() => {
+                                detailDiv.style.display = 'none';
+                                detailDiv.classList.remove('fade-out');
+                            }, 500);
+                        }, 1300);
+                    });
+                }
+            });
+
+            curriculum.appendChild(curriculumBar);
+
+            listItemContent.appendChild(clubName);
+            listItemContent.appendChild(departmentBox);
+            listItemContent.appendChild(description);
+            listItemContent.appendChild(representative);
+            listItemContent.appendChild(address);
+            listItemContent.appendChild(period);
+
+            const actionContainer = document.createElement('div');
+            actionContainer.className = 'action-container';
+            actionContainer.appendChild(applicationButton);
+            actionContainer.appendChild(curriculum);
+
+            listItemContent.appendChild(actionContainer);
+
+            listItem.appendChild(logoImg);
+            listItem.appendChild(listItemContent);
+
+            notionList.appendChild(listItem);
+        } else {
+            console.log("Club not added due to filter mismatch:", page.properties['동아리명']?.title?.[0]?.plain_text || 'No Name');
+        }
+    });
 }
