@@ -81,7 +81,7 @@ function showPopup(message, clubName, startDate, endDate) {
 
     // 추가된 작은 글씨 (줄 바꿈 반영)
     const infoElement = document.createElement('p');
-    infoElement.innerHTML = '전화번호를 입력해주시면 모집 시작일에 알림을 드릴게요!<br>카톡채널을 추가해야합니다';
+    infoElement.innerHTML = '전화번호를 입력해주시면 모집 시작일에 알림을 드릴게요!';
     infoElement.className = 'info-text';
     popupContent.appendChild(infoElement);
 
