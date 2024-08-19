@@ -19,12 +19,7 @@ function selectDepartments(departments) {
 
     // 모든 옵션을 초기화하고, 선택된 필터를 선택 상태로 만듭니다.
     for (let i = 0; i < departmentFilters.options.length; i++) {
-        if (departments.includes(departmentFilters.options[i].value)) {
-            departmentFilters.options[i].selected = true;
-            console.log("Selected department:", departmentFilters.options[i].value); // 선택된 필터 확인
-        } else {
-            departmentFilters.options[i].selected = false;
-        }
+        departmentFilters.options[i].selected = departments.includes(departmentFilters.options[i].value);
     }
 }
 
@@ -112,7 +107,9 @@ async function fetchNotionData() {
 
         function filterAndDisplayResults() {
             const onlyApplication = applicationFilterButton.classList.contains('active');
-            const selectedDepartments = Array.from(departmentFilters.selectedOptions).map(option => option.value);
+            const selectedDepartments = Array.from(departmentFilters.selectedOptions)
+                .map(option => option.value)
+                .filter(value => value); // 빈 값 제거
         
             console.log("Selected Departments:", selectedDepartments); // 선택된 필터를 출력
         
