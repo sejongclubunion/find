@@ -115,13 +115,16 @@ async function fetchNotionData() {
         const applicationFilterButton = document.getElementById('applicationFilterButton');
 
         departmentFilters.addEventListener('change', () => {
-            filterAndDisplayResults();
+            filterAndDisplayResults(); // 필터가 변경되면 결과를 갱신
         });
 
         applicationFilterButton.addEventListener('click', () => {
             applicationFilterButton.classList.toggle('active');
             filterAndDisplayResults();
         });
+
+        // 초기 필터 설정 후 필터링 결과 표시
+        filterAndDisplayResults();
 
     } catch (error) {
         console.error('Error fetching data:', error);
@@ -131,13 +134,13 @@ async function fetchNotionData() {
 function filterAndDisplayResults() {
     const onlyApplication = document.getElementById('applicationFilterButton').classList.contains('active');
     const departmentFilters = document.getElementById('departmentFilters');
-    const selectedDepartments = Array.from(departmentFilters.selectedOptions)
+    let selectedDepartments = Array.from(departmentFilters.selectedOptions)
         .map(option => option.value)
         .filter(value => value); // 빈 값 제거
 
+    // 초기 필터가 설정된 후 사용자가 선택한 필터가 반영되도록 설정
     if (selectedDepartments.length === 0) {
-        // 초기 필터 설정 (문화, 학술교양) 적용
-        selectedDepartments.push('문화', '학술교양');
+        selectedDepartments = ['문화', '학술교양']; // 초기 필터 설정
     }
 
     console.log("Selected Departments:", selectedDepartments); // 선택된 필터를 출력
