@@ -1,7 +1,24 @@
 document.addEventListener('DOMContentLoaded', async () => {
+    setInitialFilters(); // 페이지 로드 시 초기 필터 설정
     await fetchNotionData();  // 데이터를 가져온 후
     filterAndDisplayResults(); // 필터링된 데이터를 화면에 표시
 });
+
+function setInitialFilters() {
+    const currentUrl = window.location.href;
+    const departmentFilters = document.getElementById('departmentFilters');
+
+    if (currentUrl.includes('/culture')) {
+        // 'culture' 필터가 자동으로 선택되도록 설정
+        for (let i = 0; i < departmentFilters.options.length; i++) {
+            if (departmentFilters.options[i].value === 'culture') {
+                departmentFilters.options[i].selected = true;
+                console.log("Culture filter automatically selected");
+                break;
+            }
+        }
+    }
+}
 
 function calculateDaysLeft(startDate) {
     const today = new Date();
@@ -219,12 +236,12 @@ function filterAndDisplayResults() {
                     activeMonths.forEach((month, index) => {
                         const monthPoint = document.createElement('div');
                         monthPoint.className = 'month-point';
-                        monthPoint.textContent = month.slice(0, -1); // "월" 제거하여 숫자만 표시
+                        monthPoint.textContent = month.slice(0, -1);
 
                         let leftPosition = (index / (activeMonths.length - 1)) * 100;
 
                         if (index === activeMonths.length - 1) {
-                            leftPosition -= 2; // Adjust this value as needed
+                            leftPosition -= 2;
                         }
 
                         monthPoint.style.left = `${leftPosition}%`;
