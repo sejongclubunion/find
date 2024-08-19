@@ -80,10 +80,16 @@ function showPopup(message, clubName) {
     messageElement.textContent = message;
     popupContent.appendChild(messageElement);
 
+    // 추가된 작은 글씨
+    const infoElement = document.createElement('p');
+    infoElement.textContent = '전화번호를 입력해주시면 모집 시작일에 알림을 드릴게요!';
+    infoElement.className = 'info-text';
+    popupContent.appendChild(infoElement);
+
     // 전화번호 입력 칸 추가
     const phoneInput = document.createElement('input');
     phoneInput.type = 'tel';
-    phoneInput.placeholder = '총동아리연합회 카톡 채널을 추가하고 전화번호를 입력해주시면 카톡을 드릴게요!';
+    phoneInput.placeholder = '010-0000-0000';
     phoneInput.className = 'phone-input';
     popupContent.appendChild(phoneInput);
 
@@ -108,6 +114,7 @@ function showPopup(message, clubName) {
     popup.appendChild(popupContent);
     document.body.appendChild(popup);
 }
+
 
 
 async function fetchNotionData() {
