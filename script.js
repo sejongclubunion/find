@@ -1,38 +1,7 @@
 document.addEventListener('DOMContentLoaded', async () => {
     await fetchNotionData();  // 데이터를 가져온 후
-    setInitialFilters();  // 초기 필터 설정
     filterAndDisplayResults(); // 필터링된 데이터를 화면에 표시
 });
-
-function setInitialFilters() {
-    const currentUrl = window.location.href;
-    const departmentFilters = document.getElementById('departmentFilters');
-
-    if (currentUrl.includes('/culture')) {
-        console.log("Setting filters for culture page");
-
-        // 'culture' 필터를 선택 상태로 설정
-        departmentFilters.value = 'culture';
-
-        // 학술교양과 문화 필터를 선택 상태로 만듦
-        selectDepartments(['문화', '학술교양']);
-    }
-}
-
-function selectDepartments(departments) {
-    const departmentFilters = document.getElementById('departmentFilters');
-
-    if (departmentFilters && departmentFilters.options.length > 0) {
-        for (let i = 0; i < departmentFilters.options.length; i++) {
-            departmentFilters.options[i].selected = departments.includes(departmentFilters.options[i].value);
-            if (departmentFilters.options[i].selected) {
-                console.log("Selected department:", departmentFilters.options[i].value);
-            }
-        }
-    } else {
-        console.error("Department filters not available yet");
-    }
-}
 
 function calculateDaysLeft(startDate) {
     const today = new Date();
@@ -112,6 +81,12 @@ async function fetchNotionData() {
             departmentFilters.appendChild(option);
         });
 
+        // 추가: 'culture' 필터 추가
+        const cultureOption = document.createElement('option');
+        cultureOption.value = 'culture';
+        cultureOption.textContent = 'Culture (학술교양, 문화)';
+        departmentFilters.appendChild(cultureOption);
+
         const applicationFilterButton = document.getElementById('applicationFilterButton');
 
         departmentFilters.addEventListener('change', () => {
@@ -138,9 +113,11 @@ function filterAndDisplayResults() {
         .map(option => option.value)
         .filter(value => value);
 
-    // "culture" 필터를 선택한 경우 학술교양 또는 문화 동아리만 표시
-    const isCultureFilterSelected = selectedDepartments.includes('culture');
-    const finalSelectedDepartments = isCultureFilterSelected ? ['학술교양', '문화'] : selectedDepartments;
+    // 'culture' 필터가 선택되었을 때 '학술교양'과 '문화'를 포함
+    let finalSelectedDepartments = selectedDepartments;
+    if (selectedDepartments.includes('culture')) {
+        finalSelectedDepartments = ['학술교양', '문화'];
+    }
 
     console.log("Selected Departments:", finalSelectedDepartments);
 
