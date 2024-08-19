@@ -18,13 +18,13 @@ function setInitialFilters() {
     const departmentFilters = document.getElementById('departmentFilters');
 
     if (currentUrl.includes('/culture')) {
-        addAndSelectFilter(departmentFilters, 'culture', '문화 (창작예술, 문화)', ['창작예술', '문화']);
+        addAndSelectFilter(departmentFilters, 'culture', '문화', ['창작예술', '문화']);
     } else if (currentUrl.includes('/academic')) {
-        addAndSelectFilter(departmentFilters, 'academic', '학술 (학술교양, 정보과학)', ['학술교양', '정보과학']);
+        addAndSelectFilter(departmentFilters, 'academic', '학술', ['학술교양', '정보과학']);
     } else if (currentUrl.includes('/physical')) {
-        addAndSelectFilter(departmentFilters, 'physical', '체육 (생활체육, 무술체육, 구기체육)', ['생활체육', '무술체육', '구기체육']);
+        addAndSelectFilter(departmentFilters, 'physical', '체육', ['생활체육', '무술체육', '구기체육']);
     } else if (currentUrl.includes('/performance')) {
-        addAndSelectFilter(departmentFilters, 'performance', '공연 (공연예술, 음악연주)', ['공연예술', '음악연주']);
+        addAndSelectFilter(departmentFilters, 'performance', '공연', ['공연예술', '음악연주']);
     } else if (currentUrl.includes('/religion')) {
         selectExistingFilter(departmentFilters, '종교');
     } else if (currentUrl.includes('/volunteer')) {
