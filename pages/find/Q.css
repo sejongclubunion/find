@@ -134,6 +134,24 @@ body.no-background::before {
     background-color: #e55370;
 }
 
+/* 결과창 배경 추가 */
+.result-container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('/src/backgroud(q).png'); /* 이미지 경로를 확인하여 수정하세요 */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.5; /* 투명도 설정 */
+    z-index: -1; /* 가장 아래에 배치 */
+    pointer-events: none; /* 배경이 상호작용을 방해하지 않도록 설정 */
+    border-radius: 8px; /* 전체 모서리와 일치하도록 둥글게 설정 */
+}
+
 /* 기존 result-container의 위치를 조금 위로 조정 */
 .result-container {
     display: flex;
