@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', async () => {
     setInitialFilters(); // 페이지 로드 시 초기 필터 설정
-    await fetchNotionData();  // 데이터를 가져온 후
+    await fetchNotionData(); // 데이터를 가져온 후
     filterAndDisplayResults(); // 필터링된 데이터를 화면에 표시
 });
 
@@ -10,13 +10,13 @@ function setInitialFilters() {
 
     if (currentUrl.includes('/culture')) {
         // 'culture' 필터가 자동으로 선택되도록 설정
-        for (let i = 0; i < departmentFilters.options.length; i++) {
-            if (departmentFilters.options[i].value === 'culture') {
-                departmentFilters.options[i].selected = true;
-                console.log("Culture filter automatically selected");
-                break;
-            }
-        }
+        const cultureOption = document.createElement('option');
+        cultureOption.value = 'culture';
+        cultureOption.textContent = 'Culture (학술교양, 문화)';
+        cultureOption.selected = true; // 자동 선택
+        departmentFilters.appendChild(cultureOption);
+
+        console.log("Culture filter automatically selected");
     }
 }
 
