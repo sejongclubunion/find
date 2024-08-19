@@ -62,7 +62,6 @@ function calculateDaysLeft(startDate) {
     return daysLeft;
 }
 
-
 function isTodayBetweenDates(startDate, endDate) {
     const today = new Date();
     const start = new Date(startDate);
@@ -70,7 +69,7 @@ function isTodayBetweenDates(startDate, endDate) {
     return today >= start && today <= end;
 }
 
-function showPopup(message, clubName) {
+function showPopup(message, clubName, startDate, endDate) {
     const popup = document.createElement('div');
     popup.className = 'popup';
     const popupContent = document.createElement('div');
@@ -82,7 +81,7 @@ function showPopup(message, clubName) {
 
     // 추가된 작은 글씨
     const infoElement = document.createElement('p');
-    infoElement.textContent = '전화번호를 입력해주시면 모집 시작일에 알림을 드릴게요!<br>카톡채널을 추가해야합니다';
+    infoElement.textContent = '전화번호를 입력해주시면 모집 시작일에 알림을 드릴게요! 카톡채널을 추가해야합니다';
     infoElement.className = 'info-text';
     popupContent.appendChild(infoElement);
 
@@ -100,7 +99,9 @@ function showPopup(message, clubName) {
         const phoneNumber = phoneInput.value;
         console.log('Entered phone number:', phoneNumber); // 로그 추가
         if (phoneNumber) {
-            const isSaved = await savePhoneNumber(clubName, phoneNumber);
+            const pageUrl = window.location.href; // 현재 페이지 URL
+            const timestamp = new Date().toISOString(); // 현재 타임스탬프
+            const isSaved = await savePhoneNumber(clubName, phoneNumber, startDate, endDate, timestamp, pageUrl);
             if (isSaved) {
                 window.location.href = 'http://pf.kakao.com/_xjsxmXG';
             } else {
@@ -115,7 +116,29 @@ function showPopup(message, clubName) {
     document.body.appendChild(popup);
 }
 
-
+async function savePhoneNumber(clubName, phoneNumber, startDate, endDate, timestamp, pageUrl) {
+    console.log('savePhoneNumber function called');
+    try {
+        const response = await fetch('/api/savePhoneNumber', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ clubName, phoneNumber, startDate, endDate, timestamp, pageUrl })
+        });
+        if (response.ok) {
+            console.log('Phone number saved successfully');
+            return true;
+        } else {
+            const errorText = await response.text();
+            console.error('Failed to save phone number:', errorText);
+            return false;
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        return false;
+    }
+}
 
 async function fetchNotionData() {
     try {
@@ -255,7 +278,7 @@ function filterAndDisplayResults(data) {
                 applicationButton.style.backgroundColor = 'white';
                 applicationButton.style.color = '#F2A0B0';
                 applicationButton.style.border = '1px solid #F2A0B0';
-                applicationButton.onclick = () => showPopup(`${daysLeft}일 뒤에 지원 가능합니다!`);
+                applicationButton.onclick = () => showPopup(`${daysLeft}일 뒤에 지원 가능합니다!`, clubName.textContent, startDate, endDate);
             }
 
             const curriculum = document.createElement('div');
