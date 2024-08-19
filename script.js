@@ -1,9 +1,8 @@
 document.addEventListener('DOMContentLoaded', async () => {
-    setInitialFilters(); // 페이지 로드 시 초기 필터 설정
     await fetchNotionData(); // 데이터를 가져오고 필터 적용
+    setInitialFilters(); // 페이지 로드 시 초기 필터 설정
 });
 
-// 새로운 함수를 추가합니다.
 function selectExistingFilter(departmentFilters, department) {
     const existingOption = Array.from(departmentFilters.options).find(option => option.value === department);
     if (existingOption) {
@@ -31,7 +30,6 @@ function setInitialFilters() {
     }
 }
 
-
 function addAndSelectFilter(departmentFilters, filterValue, filterText, associatedDepartments) {
     const existingOption = Array.from(departmentFilters.options).find(option => option.value === filterValue);
     if (!existingOption) {
@@ -46,6 +44,10 @@ function addAndSelectFilter(departmentFilters, filterValue, filterText, associat
 
         // 해당 필터를 숨김 처리
         filterOption.style.display = 'none';
+    } else {
+        existingOption.selected = true; // 이미 있는 필터라면 선택만 함
+        departmentFilters.dataset.selectedDepartments = JSON.stringify(associatedDepartments);
+        console.log(`${filterText} filter already exists and is selected`);
     }
 }
 
