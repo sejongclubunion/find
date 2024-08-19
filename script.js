@@ -169,7 +169,7 @@ function filterAndDisplayResults(data) {
     // 각 필터에 대해 올바른 세부분과를 포함시키도록 수정
     let finalSelectedDepartments = selectedDepartments;
     if (selectedDepartments.includes('culture')) {
-        finalSelectedDepartments = ['학술교양', '문화'];
+        finalSelectedDepartments = ['창작예술', '문화'];
     } else if (selectedDepartments.includes('academic')) {
         finalSelectedDepartments = ['학술교양', '정보과학'];
     } else if (selectedDepartments.includes('physical')) {
