@@ -1,6 +1,7 @@
-document.addEventListener('DOMContentLoaded', () => {
-    setInitialFilters(); // 페이지 로드 시 초기 필터 설정
-    fetchNotionData();  // 데이터를 가져와서 화면에 표시
+document.addEventListener('DOMContentLoaded', async () => {
+    await fetchNotionData();  // 데이터를 가져온 후
+    setInitialFilters();  // 필터를 설정하고
+    filterAndDisplayResults(); // 데이터를 화면에 표시
 });
 
 function setInitialFilters() {
@@ -16,7 +17,7 @@ function setInitialFilters() {
 
 function selectDepartments(departments) {
     const departmentFilters = document.getElementById('departmentFilters');
-    
+
     // 필터 옵션이 로드되었는지 확인하고, 로드된 후에 선택하도록 설정
     if (departmentFilters && departmentFilters.options.length > 0) {
         // 모든 옵션을 초기화하고, 선택된 필터를 선택 상태로 만듭니다.
@@ -282,8 +283,6 @@ async function fetchNotionData() {
             filterAndDisplayResults();
         });
 
-        // 필터를 설정한 후, 데이터를 표시
-        filterAndDisplayResults();
     } catch (error) {
         console.error('Error fetching data:', error);
     }
