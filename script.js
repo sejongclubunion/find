@@ -6,19 +6,25 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 function setInitialFilters() {
     const currentUrl = window.location.href;
-    console.log("Current URL:", currentUrl); // 현재 URL을 확인
+    const departmentFilters = document.getElementById('departmentFilters');
 
-    // 특정 URL에 따라 필터를 자동으로 선택
     if (currentUrl.includes('/culture')) {
         console.log("Setting filters for culture page");
-        selectDepartments(['문화', '학술교양']);  // Culture 페이지에서 '문화'와 '학술교양' 필터 선택
+        // 필터의 값을 'culture'로 설정 (1회성)
+        const cultureOption = document.createElement('option');
+        cultureOption.value = 'culture';
+        cultureOption.textContent = 'Culture';
+        cultureOption.selected = true;
+        departmentFilters.insertBefore(cultureOption, departmentFilters.firstChild);
+
+        // 학술교양과 문화 필터를 선택 상태로 만듦
+        selectDepartments(['문화', '학술교양']);
     }
 }
 
 function selectDepartments(departments) {
     const departmentFilters = document.getElementById('departmentFilters');
 
-    // 필터 옵션이 로드되었는지 확인하고, 로드된 후에 선택하도록 설정
     if (departmentFilters && departmentFilters.options.length > 0) {
         // 모든 옵션을 초기화하고, 선택된 필터를 선택 상태로 만듭니다.
         for (let i = 0; i < departmentFilters.options.length; i++) {
@@ -57,14 +63,12 @@ function showPopup(message) {
     messageElement.textContent = message;
     popupContent.appendChild(messageElement);
 
-    // 이메일 입력 칸 추가
     const emailInput = document.createElement('input');
     emailInput.type = 'email';
     emailInput.placeholder = '총동아리연합회 카톡 채널을 추가하고 전화번호를 입력해주시면 카톡을 드릴게요!';
     emailInput.className = 'email-input';
     popupContent.appendChild(emailInput);
 
-    // Kakao 링크 버튼 추가
     const kakaoLinkButton = document.createElement('button');
     kakaoLinkButton.textContent = '카톡 채널 추가';
     kakaoLinkButton.className = 'popup-button';
@@ -138,8 +142,10 @@ function filterAndDisplayResults() {
         .map(option => option.value)
         .filter(value => value); // 빈 값 제거
 
-    // 초기 필터가 설정된 후 사용자가 선택한 필터가 반영되도록 설정
-    if (selectedDepartments.length === 0) {
+    // "모든 동아리"를 선택하면 전체 동아리를 표시하도록 설정
+    if (selectedDepartments.includes('')) {
+        selectedDepartments = []; // 모든 동아리 선택 시 필터 해제
+    } else if (selectedDepartments.length === 0 || selectedDepartments.includes('culture')) {
         selectedDepartments = ['문화', '학술교양']; // 초기 필터 설정
     }
 
@@ -157,7 +163,7 @@ function filterAndDisplayResults() {
 
                 // 필터 조건 확인
                 const matchesApplicationFilter = !onlyApplication || page.properties['신청방법']?.url;
-                const matchesDepartmentFilter = selectedDepartments.includes(department);
+                const matchesDepartmentFilter = selectedDepartments.length === 0 || selectedDepartments.includes(department);
 
                 console.log("matchesApplicationFilter:", matchesApplicationFilter);
                 console.log("matchesDepartmentFilter:", matchesDepartmentFilter);
@@ -224,7 +230,6 @@ function filterAndDisplayResults() {
 
                     const curriculumText = page.properties['커리큘럼']?.rich_text?.[0]?.plain_text || 'N/A';
 
-                    // 커리큘럼 텍스트를 월별로 분리
                     const curriculumItems = curriculumText.split('\n');
                     const months = ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'];
                     let monthDetails = {};
