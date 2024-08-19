@@ -29,6 +29,9 @@ function addAndSelectFilter(departmentFilters, filterValue, filterText, associat
         departmentFilters.dataset.selectedDepartments = JSON.stringify(associatedDepartments);
 
         console.log(`${filterText} filter automatically selected`);
+
+        // 해당 필터를 숨김 처리
+        filterOption.style.display = 'none';
     }
 }
 
@@ -103,35 +106,7 @@ async function fetchNotionData() {
 
         const departmentFilters = document.getElementById('departmentFilters');
 
-        // 각 페이지의 필터를 추가할 때 중복 방지 로직
-        if (!Array.from(departmentFilters.options).find(option => option.value === 'culture')) {
-            const cultureOption = document.createElement('option');
-            cultureOption.value = 'culture';
-            cultureOption.textContent = 'Culture (창작예술, 문화)';
-            departmentFilters.appendChild(cultureOption);
-        }
-
-        if (!Array.from(departmentFilters.options).find(option => option.value === 'academic')) {
-            const academicOption = document.createElement('option');
-            academicOption.value = 'academic';
-            academicOption.textContent = 'Academic (학술교양, 정보과학)';
-            departmentFilters.appendChild(academicOption);
-        }
-
-        if (!Array.from(departmentFilters.options).find(option => option.value === 'physical')) {
-            const physicalOption = document.createElement('option');
-            physicalOption.value = 'physical';
-            physicalOption.textContent = 'Physical (생활체육, 무술체육, 구기체육)';
-            departmentFilters.appendChild(physicalOption);
-        }
-
-        if (!Array.from(departmentFilters.options).find(option => option.value === 'performance')) {
-            const performanceOption = document.createElement('option');
-            performanceOption.value = 'performance';
-            performanceOption.textContent = 'Performance (공연예술, 음악연주)';
-            departmentFilters.appendChild(performanceOption);
-        }
-
+        // 기존의 필터들은 그대로 유지
         departments.forEach(department => {
             if (!Array.from(departmentFilters.options).find(option => option.value === department)) {
                 const option = document.createElement('option');
