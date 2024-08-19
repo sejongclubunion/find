@@ -143,9 +143,9 @@ function filterAndDisplayResults() {
         .filter(value => value); // 빈 값 제거
 
     // "모든 동아리"를 선택하면 전체 동아리를 표시하도록 설정
-    if (selectedDepartments.includes('')) {
+    if (selectedDepartments.length === 0 || selectedDepartments.includes('culture')) {
         selectedDepartments = []; // 모든 동아리 선택 시 필터 해제
-    } else if (selectedDepartments.length === 0 || selectedDepartments.includes('culture')) {
+    } else if (selectedDepartments.length === 0) {
         selectedDepartments = ['문화', '학술교양']; // 초기 필터 설정
     }
 
