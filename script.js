@@ -71,11 +71,6 @@ function isTodayBetweenDates(startDate, endDate) {
 }
 
 function showPopup(message, clubName) {
-    if (!clubName) {
-        console.error('showPopup: clubName is not defined');
-        return;
-    }
-    
     const popup = document.createElement('div');
     popup.className = 'popup';
     const popupContent = document.createElement('div');
@@ -96,16 +91,8 @@ function showPopup(message, clubName) {
     closeButton.textContent = '확인';
     closeButton.className = 'popup-button';
     closeButton.onclick = async () => {
-        const phoneNumber = phoneInput.value.trim();
-        
-        // 전화번호 유효성 검사 (간단한 예)
-        const phoneNumberPattern = /^[0-9]{10,15}$/;
-        if (!phoneNumberPattern.test(phoneNumber)) {
-            alert('유효한 전화번호를 입력해주세요.');
-            return;
-        }
-
-        console.log('Entered phone number:', phoneNumber);
+        const phoneNumber = phoneInput.value;
+        console.log('Entered phone number:', phoneNumber); // 로그 추가
         if (phoneNumber) {
             const isSaved = await savePhoneNumber(clubName, phoneNumber);
             if (isSaved) {
@@ -120,36 +107,6 @@ function showPopup(message, clubName) {
 
     popup.appendChild(popupContent);
     document.body.appendChild(popup);
-}
-
-async function savePhoneNumber(clubName, phoneNumber) {
-    if (!clubName || !phoneNumber) {
-        console.error('savePhoneNumber: clubName or phoneNumber is not defined');
-        return false;
-    }
-
-    console.log('savePhoneNumber function called');
-    const pageUrl = window.location.href; // 현재 페이지 URL 가져오기
-    try {
-        const response = await fetch('/api/savePhoneNumber', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ clubName, phoneNumber, pageUrl })
-        });
-        if (response.ok) {
-            console.log('Phone number saved successfully');
-            return true;
-        } else {
-            const errorText = await response.text();
-            console.error('Failed to save phone number:', errorText);
-            return false;
-        }
-    } catch (error) {
-        console.error('Error:', error);
-        return false;
-    }
 }
 
 
@@ -371,4 +328,3 @@ function filterAndDisplayResults(data) {
         }
     });
 }
-
