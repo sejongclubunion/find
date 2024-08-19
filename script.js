@@ -62,6 +62,7 @@ function calculateDaysLeft(startDate) {
     return daysLeft;
 }
 
+
 function isTodayBetweenDates(startDate, endDate) {
     const today = new Date();
     const start = new Date(startDate);
@@ -160,7 +161,6 @@ function filterAndDisplayResults(data) {
         .map(option => option.value)
         .filter(value => value);
 
-    // 각 필터에 대해 올바른 세부분과를 포함시키도록 수정
     let finalSelectedDepartments = selectedDepartments;
     if (selectedDepartments.includes('culture')) {
         finalSelectedDepartments = ['창작예술', '문화'];
@@ -176,24 +176,16 @@ function filterAndDisplayResults(data) {
         finalSelectedDepartments = ['봉사'];
     }
 
-    console.log("Selected Departments:", finalSelectedDepartments);
-
     const notionList = document.querySelector('#notionList');
-    notionList.innerHTML = ''; // 중복 방지를 위해 리스트 초기화
+    notionList.innerHTML = '';
 
     data.results.forEach(page => {
         const department = page.properties['세부 분과']?.rich_text?.[0]?.plain_text || 'No Department';
-        console.log("Processing department:", department);
 
         const matchesApplicationFilter = !onlyApplication || isTodayBetweenDates(page.properties['모집 시작일']?.date?.start, page.properties['모집 마감일']?.date?.start);
         const matchesDepartmentFilter = finalSelectedDepartments.length === 0 || finalSelectedDepartments.includes(department);
 
-        console.log("matchesApplicationFilter:", matchesApplicationFilter);
-        console.log("matchesDepartmentFilter:", matchesDepartmentFilter);
-
         if (matchesApplicationFilter && matchesDepartmentFilter) {
-            console.log("Adding club to list:", page.properties['동아리명']?.title?.[0]?.plain_text || 'No Name');
-
             const listItem = document.createElement('div');
             listItem.className = 'list-item';
 
@@ -232,25 +224,23 @@ function filterAndDisplayResults(data) {
             const applicationButton = document.createElement('button');
             const applicationUrl = page.properties['신청방법']?.url || '#';
 
-            const daysLeft = calculateDaysLeft(endDate);
-            if (daysLeft >= 0) {
-                if (isTodayBetweenDates(startDate, endDate)) {
-                    applicationButton.textContent = '지원하기 !';
-                    applicationButton.style.backgroundColor = '#F2A0B0';
-                    applicationButton.style.color = 'white';
-                    applicationButton.onclick = () => window.open(applicationUrl, '_blank');
-                } else {
-                    applicationButton.textContent = `D-${daysLeft}`;
-                    applicationButton.style.backgroundColor = 'white';
-                    applicationButton.style.color = '#F2A0B0';
-                    applicationButton.style.border = '1px solid #F2A0B0';
-                    applicationButton.onclick = () => showPopup(`${daysLeft}일 뒤에 지원 가능합니다!`);
-                }
-            } else {
+            const daysLeft = calculateDaysLeft(startDate);
+            if (isTodayBetweenDates(startDate, endDate)) {
+                applicationButton.textContent = '지원하기 !';
+                applicationButton.style.backgroundColor = '#F2A0B0';
+                applicationButton.style.color = 'white';
+                applicationButton.onclick = () => window.open(applicationUrl, '_blank');
+            } else if (daysLeft < 0) {
                 applicationButton.textContent = '모집마감';
-                applicationButton.style.backgroundColor = '#ccc';
-                applicationButton.style.color = '#666';
-                applicationButton.disabled = true; // 버튼 비활성화
+                applicationButton.style.backgroundColor = '#f2f2f2';
+                applicationButton.style.color = '#999';
+                applicationButton.disabled = true;
+            } else {
+                applicationButton.textContent = `D-${daysLeft}`;
+                applicationButton.style.backgroundColor = 'white';
+                applicationButton.style.color = '#F2A0B0';
+                applicationButton.style.border = '1px solid #F2A0B0';
+                applicationButton.onclick = () => showPopup(`${daysLeft}일 뒤에 지원 가능합니다!`);
             }
 
             const curriculum = document.createElement('div');
@@ -259,7 +249,6 @@ function filterAndDisplayResults(data) {
             curriculumBar.className = 'curriculum-bar';
 
             const curriculumText = page.properties['커리큘럼']?.rich_text?.[0]?.plain_text || 'N/A';
-
             const curriculumItems = curriculumText.split('\n');
             const months = ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'];
             let monthDetails = {};
@@ -282,11 +271,9 @@ function filterAndDisplayResults(data) {
                 monthPoint.textContent = month.slice(0, -1);
 
                 let leftPosition = (index / (activeMonths.length - 1)) * 100;
-
                 if (index === activeMonths.length - 1) {
                     leftPosition -= 2;
                 }
-
                 monthPoint.style.left = `${leftPosition}%`;
 
                 const detailDiv = document.createElement('div');
@@ -330,8 +317,7 @@ function filterAndDisplayResults(data) {
             listItem.appendChild(listItemContent);
 
             notionList.appendChild(listItem);
-        } else {
-            console.log("Club not added due to filter mismatch:", page.properties['동아리명']?.title?.[0]?.plain_text || 'No Name');
         }
     });
 }
+
