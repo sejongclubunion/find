@@ -8,17 +8,27 @@ function setInitialFilters() {
     const departmentFilters = document.getElementById('departmentFilters');
 
     if (currentUrl.includes('/culture')) {
-        // 'culture' 필터가 이미 존재하는지 확인 후, 없다면 추가
-        const existingOption = Array.from(departmentFilters.options).find(option => option.value === 'culture');
-        if (!existingOption) {
-            const cultureOption = document.createElement('option');
-            cultureOption.value = 'culture';
-            cultureOption.textContent = 'Culture (학술교양, 문화)';
-            cultureOption.selected = true; // 자동 선택
-            departmentFilters.appendChild(cultureOption);
+        addAndSelectFilter(departmentFilters, 'culture', 'Culture (창작예술, 문화)', ['창작예술', '문화']);
+    } else if (currentUrl.includes('/academic')) {
+        addAndSelectFilter(departmentFilters, 'academic', 'Academic (학술교양, 정보과학)', ['학술교양', '정보과학']);
+    } else if (currentUrl.includes('/physical')) {
+        addAndSelectFilter(departmentFilters, 'physical', 'Physical (생활체육, 무술체육, 구기체육)', ['생활체육', '무술체육', '구기체육']);
+    } else if (currentUrl.includes('/performance')) {
+        addAndSelectFilter(departmentFilters, 'performance', 'Performance (공연예술, 음악연주)', ['공연예술', '음악연주']);
+    }
+}
 
-            console.log("Culture filter automatically selected");
-        }
+function addAndSelectFilter(departmentFilters, filterValue, filterText, associatedDepartments) {
+    const existingOption = Array.from(departmentFilters.options).find(option => option.value === filterValue);
+    if (!existingOption) {
+        const filterOption = document.createElement('option');
+        filterOption.value = filterValue;
+        filterOption.textContent = filterText;
+        filterOption.selected = true; // 자동 선택
+        departmentFilters.appendChild(filterOption);
+        departmentFilters.dataset.selectedDepartments = JSON.stringify(associatedDepartments);
+
+        console.log(`${filterText} filter automatically selected`);
     }
 }
 
@@ -91,15 +101,35 @@ async function fetchNotionData() {
             departments.add(department);
         });
 
-        // Render department filters
         const departmentFilters = document.getElementById('departmentFilters');
 
-        // culture 필터를 추가할 때 중복 방지 로직
+        // 각 페이지의 필터를 추가할 때 중복 방지 로직
         if (!Array.from(departmentFilters.options).find(option => option.value === 'culture')) {
             const cultureOption = document.createElement('option');
             cultureOption.value = 'culture';
-            cultureOption.textContent = 'Culture (학술교양, 문화)';
+            cultureOption.textContent = 'Culture (창작예술, 문화)';
             departmentFilters.appendChild(cultureOption);
+        }
+
+        if (!Array.from(departmentFilters.options).find(option => option.value === 'academic')) {
+            const academicOption = document.createElement('option');
+            academicOption.value = 'academic';
+            academicOption.textContent = 'Academic (학술교양, 정보과학)';
+            departmentFilters.appendChild(academicOption);
+        }
+
+        if (!Array.from(departmentFilters.options).find(option => option.value === 'physical')) {
+            const physicalOption = document.createElement('option');
+            physicalOption.value = 'physical';
+            physicalOption.textContent = 'Physical (생활체육, 무술체육, 구기체육)';
+            departmentFilters.appendChild(physicalOption);
+        }
+
+        if (!Array.from(departmentFilters.options).find(option => option.value === 'performance')) {
+            const performanceOption = document.createElement('option');
+            performanceOption.value = 'performance';
+            performanceOption.textContent = 'Performance (공연예술, 음악연주)';
+            departmentFilters.appendChild(performanceOption);
         }
 
         departments.forEach(department => {
@@ -122,8 +152,7 @@ async function fetchNotionData() {
             filterAndDisplayResults(data);
         });
 
-        // 초기 필터 설정 후 필터링 결과 표시
-        filterAndDisplayResults(data);
+        filterAndDisplayResults(data); // 초기 필터 설정 후 필터링 결과 표시
 
     } catch (error) {
         console.error('Error fetching data:', error);
@@ -137,10 +166,16 @@ function filterAndDisplayResults(data) {
         .map(option => option.value)
         .filter(value => value);
 
-    // 'culture' 필터가 선택되었을 때 '학술교양'과 '문화'를 포함
+    // 각 필터에 대해 올바른 세부분과를 포함시키도록 수정
     let finalSelectedDepartments = selectedDepartments;
     if (selectedDepartments.includes('culture')) {
         finalSelectedDepartments = ['학술교양', '문화'];
+    } else if (selectedDepartments.includes('academic')) {
+        finalSelectedDepartments = ['학술교양', '정보과학'];
+    } else if (selectedDepartments.includes('physical')) {
+        finalSelectedDepartments = ['생활체육', '무술체육', '구기체육'];
+    } else if (selectedDepartments.includes('performance')) {
+        finalSelectedDepartments = ['공연예술', '음악연주'];
     }
 
     console.log("Selected Departments:", finalSelectedDepartments);
@@ -220,6 +255,7 @@ function filterAndDisplayResults(data) {
             curriculumBar.className = 'curriculum-bar';
 
             const curriculumText = page.properties['커리큘럼']?.rich_text?.[0]?.plain_text || 'N/A';
+
             const curriculumItems = curriculumText.split('\n');
             const months = ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'];
             let monthDetails = {};

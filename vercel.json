@@ -19,6 +19,18 @@
     {
       "source": "/culture",
       "destination": "/pages/culture.html"
+    },
+    {
+      "source": "/performance",
+      "destination": "/pages/performance.html"
+    },
+    {
+      "source": "/physical",
+      "destination": "/pages/physical.html"
+    },
+    {
+      "source": "/academic",
+      "destination": "/pages/academic.html"
     }
   ]
 }
