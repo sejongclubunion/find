@@ -12,42 +12,21 @@ body {
     overflow: hidden;
 }
 
-/* 배경 이미지 추가 부분 */
-body::before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 30%; /* 배경 이미지 크기 조정 */
-    height: 30%; /* 배경 이미지 크기 조정 */
-    background-image: url('/pages/find/donghwa.png'); /* 로컬 이미지 경로 */
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    transform: translate(-50%, -50%);
-    z-index: -1;
-}
-
-/* 결과창에서는 배경 이미지 제거 */
-body.no-background::before {
-    display: none;
-}
-
 .progress-container {
     width: 80%;
     margin: 20px;
     display: flex;
-    flex-direction: column; /* 텍스트와 프로그레스 바를 세로로 정렬 */
+    flex-direction: column;
     align-items: center;
     position: relative;
-    top: 5%; /* 상단에 위치시키기 위해 조정 */
+    top: 5%;
 }
 
 .progress-bar-wrapper {
     display: flex;
     align-items: center;
     width: 100%;
-    margin-top: 10px; /* 텍스트와의 간격 추가 */
+    margin-top: 10px;
 }
 
 .progress-bar-container {
@@ -56,8 +35,8 @@ body.no-background::before {
     background-color: #e0e0e0;
     border-radius: 5px;
     position: relative;
-    overflow: visible; /* 아이콘이 잘리지 않도록 설정 */
-    margin-right: 10px; /* 퍼센트와의 간격 추가 */
+    overflow: visible;
+    margin-right: 10px;
 }
 
 .progress-bar {
@@ -69,19 +48,19 @@ body.no-background::before {
     top: 0;
     left: 0;
     transition: width 0.3s ease;
-    z-index: 1; /* progress-bar의 z-index를 낮게 설정 */
+    z-index: 1;
 }
 
 .progress-icon {
     position: absolute;
-    top: -10px; /* 아이콘 위치 조정 */
-    width: 30px; /* 아이콘 크기 조정 */
-    height: 30px; /* 아이콘 크기 조정 */
-    background-image: url('/pages/find/donghwa.png'); /* 진행 상태 아이콘 경로 */
+    top: -10px;
+    width: 30px;
+    height: 30px;
+    background-image: url('/pages/find/donghwa.png');
     background-size: cover;
     background-repeat: no-repeat;
     transition: left 0.3s ease;
-    z-index: 2; /* 아이콘이 progress-bar 위에 오도록 z-index 설정 */
+    z-index: 2;
 }
 
 .progress-text {
@@ -96,14 +75,14 @@ body.no-background::before {
     width: 80%;
     max-width: 600px;
     position: relative;
-    top: 15%; /* 아래로 위치시키기 위해 추가 */
+    top: 15%;
 }
 
 .question {
     font-size: 1.5em;
     margin-bottom: 20px;
     margin-top: 60px;
-    font-weight: bold; /* 질문 텍스트 볼드 처리 */
+    font-weight: bold;
 }
 
 .options {
@@ -111,7 +90,7 @@ body.no-background::before {
     flex-direction: column;
     align-items: center;
     width: 100%;
-    position: fixed; /* absolute에서 fixed로 변경 */
+    position: fixed;
     bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
@@ -134,39 +113,19 @@ body.no-background::before {
     background-color: #e55370;
 }
 
-/* 결과창 배경 추가 */
-.result-container::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url('/src/backgroud(q).png'); /* 이미지 경로를 확인하여 수정하세요 */
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    opacity: 0.5; /* 투명도 설정 */
-    z-index: -1; /* 가장 아래에 배치 */
-    pointer-events: none; /* 배경이 상호작용을 방해하지 않도록 설정 */
-    border-radius: 8px; /* 전체 모서리와 일치하도록 둥글게 설정 */
-}
-
-/* 기존 result-container의 위치를 조금 위로 조정 */
 .result-container {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start; /* 위쪽으로 정렬 */
+    justify-content: flex-start;
     align-items: center;
-    height: 80vh; /* 높이를 조정하여 위쪽으로 이동 */
+    height: 80vh;
     text-align: center;
     transition: all 0.5s ease-in-out;
-    margin-top: -50px; /* 위로 더 올리기 위해 마진 조정 */
+    margin-top: -50px;
 }
 
-/* 세부 동아리 보기 버튼을 눌렀을 때의 상태 */
 .result-container.show-content {
-    margin-top: 0; /* 프로그레스 바로 아래로 붙이기 */
+    margin-top: 0;
 }
 
 .result-image {
@@ -182,7 +141,6 @@ body.no-background::before {
     margin-top: 20px;
 }
 
-/* 결과 텍스트와 설명 */
 .result-text {
     font-size: 1.5em;
     margin-bottom: 10px;
@@ -194,7 +152,6 @@ body.no-background::before {
     margin-bottom: 20px;
 }
 
-/* "세부 분과 보기" 버튼 */
 .show-button {
     color: white;
     border: none;
@@ -220,16 +177,16 @@ body.no-background::before {
     padding: 20px;
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    margin-top: 20px; /* 간격 조정 */
+    margin-top: 20px;
     border-radius: 8px;
     max-height: 60vh;
-    overflow-y: auto; /* 결과 창에서 스크롤 가능하도록 설정 */
+    overflow-y: auto;
     transition: max-height 0.5s ease-in-out;
 }
 
 .list-item {
     display: flex;
-    flex-direction: row; /* 이미지와 콘텐츠를 가로로 배치 */
+    flex-direction: row;
     align-items: center;
     padding: 20px;
     border-bottom: 1px solid #ddd;
@@ -311,7 +268,7 @@ button:hover {
     height: 50px;
     margin-left: 20px;
     position: relative;
-    width: 50%; /* 바 전체 길이를 50%로 조정 */
+    width: 50%;
 }
 
 .curriculum-bar {
@@ -323,19 +280,19 @@ button:hover {
 }
 
 .month-point {
-    height: 30px; /* 크기 50% 증가 */
-    width: 30px; /* 크기 50% 증가 */
+    height: 30px;
+    width: 30px;
     background-color: white;
     color: #F2A0B0;
-    border: 1px solid #F2A0B0; /* 테두리 추가 */
+    border: 1px solid #F2A0B0;
     border-radius: 50%;
     cursor: pointer;
     position: absolute;
-    top: -12.5px; /* 크기 증가에 따라 위치 조정 */
+    top: -12.5px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 12px; /* 크기에 맞게 폰트 크기 증가 */
+    font-size: 12px;
     line-height: 1;
     z-index: 1;
 }
@@ -343,7 +300,7 @@ button:hover {
 .month-detail {
     display: none;
     position: absolute;
-    top: 35px; /* 위치 조정 */
+    top: 35px;
     left: 50%;
     transform: translateX(-50%);
     background-color: #fff;
@@ -360,7 +317,6 @@ button:hover {
     display: block;
 }
 
-/* 팝업 스타일 */
 .popup {
     position: fixed;
     top: 50%;
@@ -402,7 +358,6 @@ button:hover {
     font-size: 14px;
 }
 
-/* 수직 및 수평 정렬 */
 .center-content {
     display: flex;
     flex-direction: column;
@@ -414,17 +369,19 @@ button:hover {
 }
 
 .show-content {
-    margin-top: -80px; /* 기존보다 더 작은 값으로 조정하여 더 아래로 이동 */
+    margin-top: -80px;
     transition: all 0.5s ease-in-out;
 }
+
 .notion-list {
-    margin-top: 20px; /* 세부 동아리 목록이 위로 올라오도록 조정 */
+    margin-top: 20px;
     transition: margin-top 0.5s ease-in-out;
 }
 
 .notion-list.show-content {
-    margin-top: 0; /* 프로그레스 바로 아래로 붙이기 */
+    margin-top: 0;
 }
+
 .download-button {
     background-color: #F2A0B0;
     color: white;
@@ -450,29 +407,25 @@ button:hover {
     justify-content: center;
     align-items: center;
     margin-top: 20px;
-    flex-wrap: wrap; /* 버튼이 줄 바꿈될 수 있도록 설정 */
-    margin-bottom: 30px; /* button-container의 하단에 여유 공간 추가 */
+    flex-wrap: wrap;
+    margin-bottom: 30px;
 }
+
 .view-all-button {
-    margin-top: 30px; /* view-all-button의 상단에 여유 공간 추가 */
+    margin-top: 30px;
 }
 
 .button-container > .download-button {
-    margin-left: 10px; /* 다운로드 버튼은 오른쪽에 배치 */
+    margin-left: 10px;
 }
 
 .all-departments-button {
     display: block;
-    margin-top: 10px; /* 세부 동아리 보기, 다운로드 버튼 아래에 위치 */
-    width: 100%; /* 버튼을 전체 너비로 설정 */
+    margin-top: 10px;
+    width: 100%;
     text-align: center;
 }
 
-
-
-
-
-/* 반응형 스타일 */
 @media (min-width: 600px) {
     .list-item {
         flex-direction: row;
@@ -501,18 +454,18 @@ button:hover {
     }
 
     .list-item {
-        flex-direction: row; /* 이미지와 콘텐츠를 가로로 배치 */
+        flex-direction: row;
         align-items: center;
         padding: 10px;
     }
 
     .list-item img {
-        width: 80px; /* 이미지 크기 조정 */
-        height: 80px; /* 이미지 높이 조정 */
-        margin-right: 10px; /* 이미지와 콘텐츠 사이의 간격 */
+        width: 80px;
+        height: 80px;
+        margin-right: 10px;
         border-radius: 8px;
         border: 1px solid #ddd;
-        align-self: center; /* 수직 가운데 정렬 */
+        align-self: center;
     }
 
     .list-item-content {
@@ -521,7 +474,7 @@ button:hover {
     }
 
     .department-box {
-        margin-left: 5px; /* 분과 정보 위치 조정 */
+        margin-left: 5px;
     }
 
     .curriculum-bar-container {
@@ -545,18 +498,18 @@ button:hover {
     }
 
     .list-item-content h2 {
-        font-size: 14px; /* 제목 텍스트 크기 줄이기 */
+        font-size: 14px;
     }
 
     .list-item-content p {
-        font-size: 12px; /* 일반 텍스트 크기 줄이기 */
+        font-size: 12px;
     }
 
     .department-box {
-        font-size: 12px; /* 분과 텍스트 크기 줄이기 */
+        font-size: 12px;
     }
 
     .month-point {
-        font-size: 10px; /* 커리큘럼 포인트 텍스트 크기 줄이기 */
+        font-size: 10px;
     }
 }

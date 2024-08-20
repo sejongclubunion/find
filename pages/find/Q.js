@@ -334,8 +334,14 @@ async function displayResults(subCategory) {
     const notionList = document.getElementById("notionList");
     const resultContainer = document.querySelector('.result-container');
 
-    // 배경 이미지 제거
+    // 질문 창에서는 배경 이미지를 제거
     document.body.classList.add("no-background");
+
+    // 결과 창에서 배경 이미지 추가
+    document.body.style.backgroundImage = "url('/src/backgroud(q).png')";
+    document.body.style.backgroundSize = "cover";
+    document.body.style.backgroundPosition = "center";
+    document.body.style.backgroundRepeat = "no-repeat";
 
     questionElement.innerHTML = "";
     optionsElement.innerHTML = "";
@@ -343,18 +349,15 @@ async function displayResults(subCategory) {
     progressPercent.innerHTML = '100%';
     progressIcon.style.left = `calc(100% - 10px)`;
 
-    // 결과 이미지 설정
     const imagePath = `/src/${subCategory}.png`;
     resultImage.style.display = 'block';
     resultImage.style.backgroundImage = `url('${imagePath}')`;
 
-    // 결과 텍스트 및 설명 추가
     resultDepartment.innerHTML = `
         <div class="result-text">${subCategory} 분과를 추천드려요!</div>
         <div class="description-text">${subCategoryDescriptions[subCategory]}</div>
     `;
 
-    // "세부 동아리 보기" 버튼 및 다운로드 아이콘 추가
     const showButton = document.createElement("button");
     showButton.className = "show-button";
     showButton.innerText = "세부 동아리 보기";
@@ -396,9 +399,9 @@ async function displayResults(subCategory) {
         }
     };
 
-    // 바로 데이터를 로딩 시작.
     loadNotionData(subCategory);
 }
+
 
 
 
