@@ -31,7 +31,7 @@
             -moz-user-select: none;
             -ms-user-select: none;
             user-select: none;
-    }
+        }
 
         .container {
             width: 100vw;
@@ -75,6 +75,13 @@
             font-size: 50px;
             color: black;
             margin-bottom: 160px;
+            opacity: 1;
+            transition: all 1s ease;
+        }
+
+        .number-text.hidden {
+            transform: translateY(-50px);
+            opacity: 0;
         }
 
         .gradient-effect-text {
@@ -95,13 +102,14 @@
                 background-position: center;
                 overflow-y: auto;
             }
-            .number-text{
+
+            .number-text {
                 font-family: 'Galmuri9', sans-serif;
                 font-size: 50px;
                 color: black;
                 margin-bottom: 80px;
-             }
             }
+        }
     </style>
 </head>
 <body>
@@ -110,8 +118,8 @@
     </div>
 
     <div class="bottom-content">
-        <div class="number-text">1234</div>
-        <button class="button" id="shareButton">버튼 위치 여기입니더!!!</button>
+        <div class="number-text" id="numberText">1234</div>
+        <button class="button" id="shareButton"></button>
     </div>
 
     <script>
@@ -119,9 +127,11 @@
             const findClubButton = document.getElementById('findClubButton');
             const shareButton = document.getElementById('shareButton');
             const container = document.getElementById('container');
+            const numberText = document.getElementById('numberText');
 
             findClubButton.addEventListener('click', () => {
                 showLoadingAnimation();
+                numberText.classList.add('hidden'); // 애니메이션 효과 추가
                 setTimeout(() => {
                     container.style.transform = 'translateY(-100vh)';
                     setTimeout(() => {
