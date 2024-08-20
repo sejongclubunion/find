@@ -19,6 +19,7 @@
             align-items: center;
             height: 100vh;
             overflow: hidden;
+            flex-direction: column;
         }
 
         .container {
@@ -56,6 +57,23 @@
             margin: 0 auto;
             justify-content: center; /* 가로 가운데 정렬 */
             align-items: center; /* 세로 가운데 정렬 */
+            margin-bottom: 10px; /* 버튼을 위로 10px 이동 */
+        }
+
+        .bottom-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+        }
+
+        .number-text {
+            font-family: 'Galmuri9', sans-serif;
+            font-size: 24px;
+            color: white;
+            margin-bottom: 10px;
         }
 
         @media (max-width: 768px) {
@@ -74,12 +92,18 @@
 </head>
 <body>
     <div class="container" id="container">
-        <button class="button" id="findClubButton"></button>
+        <button class="button" id="findClubButton">내게 맞는 동아리 찾기</button>
+    </div>
+
+    <div class="bottom-content">
+        <div class="number-text">1234</div>
+        <button class="button" id="shareButton">URL 공유하기</button>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const findClubButton = document.getElementById('findClubButton');
+            const shareButton = document.getElementById('shareButton');
             const container = document.getElementById('container');
 
             findClubButton.addEventListener('click', () => {
@@ -89,6 +113,20 @@
                 setTimeout(() => {
                     window.location.href = '/find';
                 }, 1000); // 애니메이션 시간과 일치하도록 설정
+            });
+
+            shareButton.addEventListener('click', () => {
+                if (navigator.share) {
+                    navigator.share({
+                        title: document.title,
+                        text: '내게 맞는 동아리 찾기',
+                        url: window.location.href,
+                    })
+                    .then(() => console.log('공유 성공'))
+                    .catch(error => console.error('공유 실패:', error));
+                } else {
+                    alert('공유 기능을 사용할 수 없는 브라우저입니다.');
+                }
             });
         });
     </script>
