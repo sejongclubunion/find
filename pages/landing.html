@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>총동아리연합회</title>
     <meta property="og:image" content="/src/og.png">
     <meta property="og:title" content="내게 맞는 동아리 찾기">
@@ -27,13 +27,17 @@
             height: 100vh;
             overflow: hidden;
             flex-direction: column;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
         }
 
         .container {
             width: 100vw;
             height: 100vh;
             background: url('/src/page_cover2.png') no-repeat center center;
-            background-size: contain; /* 배경 이미지를 화면에 맞게 조정 */
+            background-size: cover;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -43,24 +47,16 @@
             transition: transform 1s ease-in-out;
         }
 
-        .gradient-effect-text {
-            background: linear-gradient(90deg, #f3ec78, #af4261);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
         .button {
             background-color: var(--color-primary);
             border: none;
             color: white;
-            padding: 30px 100px;
+            padding: 15px 32px;
             text-align: center;
-            text-decoration: none;
             display: inline-block;
             font-size: 16px;
             cursor: pointer;
             border-radius: 12px;
-            max-width: 300px;
             margin: 0 auto;
             justify-content: center;
             align-items: center;
@@ -68,12 +64,10 @@
         }
 
         .bottom-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
             position: absolute;
             bottom: 20px;
             width: 100%;
+            text-align: center;
         }
 
         .number-text {
@@ -81,28 +75,25 @@
             font-size: 50px;
             color: black;
             margin-bottom: 160px;
-            text-align: center;
+        }
+
+        .gradient-effect-text {
+            background: linear-gradient(90deg, #f3ec78, #af4261);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         @media (max-width: 768px) {
             body, .container {
-                width: 100vh; /* width를 340px로 고정 */
+                width: 100vw;
                 height: 100vh;
                 background-color: black;
             }
 
             .container {
-                background-size: contain; /* 배경 이미지가 잘리지 않도록 설정 */
-                background-position: center center;
-                padding: 10px;
-            }
-
-            .number-text {
-                font-family: 'Galmuri9', sans-serif;
-                font-size: 50px;
-                color: black;
-                margin-bottom: 180px;
-                text-align: center;
+                background-size: cover;
+                background-position: center;
+                overflow-y: scroll;
             }
         }
     </style>
@@ -124,13 +115,13 @@
             const container = document.getElementById('container');
 
             findClubButton.addEventListener('click', () => {
-                // 커버 이미지가 위로 올라가는 애니메이션
-                container.style.transform = 'translateY(-100vh)';
-                
+                showLoadingAnimation();
                 setTimeout(() => {
-                    container.style.display = 'none'; // 애니메이션 후에 container를 숨김
-                    window.location.href = '/find';
-                }, 1000); // 애니메이션 시간과 일치하도록 설정
+                    container.style.transform = 'translateY(-100vh)';
+                    setTimeout(() => {
+                        window.location.href = '/find';
+                    }, 1000);
+                }, 1000);
             });
 
             shareButton.addEventListener('click', () => {
@@ -146,6 +137,13 @@
                     alert('공유 기능을 사용할 수 없는 브라우저입니다.');
                 }
             });
+
+            function showLoadingAnimation() {
+                const loadingDiv = document.createElement('div');
+                loadingDiv.className = 'loading-animation';
+                loadingDiv.innerHTML = '<p>로딩 중...</p>';
+                document.body.appendChild(loadingDiv);
+            }
         });
     </script>
 </body>
