@@ -513,4 +513,12 @@ button:hover {
     .month-point {
         font-size: 10px;
     }
+    .question-container {
+        text-align: center;
+        width: 80%;
+        max-width: 600px;
+        position: relative;
+        top: 5%;
+    }
 }
+
