@@ -129,8 +129,8 @@ body {
 }
 
 .result-image {
-    width: 200px;
-    height: 200px;
+    width: 400px;
+    height: 300px;
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -408,11 +408,11 @@ button:hover {
     align-items: center;
     margin-top: 20px;
     flex-wrap: wrap;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
 }
 
 .view-all-button {
-    margin-top: 30px;
+    margin-top: 10px;
 }
 
 .button-container > .download-button {
