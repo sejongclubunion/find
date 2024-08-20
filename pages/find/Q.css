@@ -148,11 +148,13 @@ body {
     font-size: 1.5em;
     margin-bottom: 10px;
     font-weight: bold;
+    font-family: Ownglyph_kimkonghae;
 }
 
 .description-text {
     font-size: 1em;
     margin-bottom: 20px;
+    font-family: Ownglyph_kimkonghae;
 }
 
 .show-button {
@@ -167,6 +169,7 @@ body {
     border-radius: 5px;
     background-color: #F2A0B0;
     transition: background-color 0.3s, box-shadow 0.3s;
+    font-family: Ownglyph_kimkonghae;
 }
 
 .show-button:hover {
@@ -417,6 +420,7 @@ button:hover {
 
 .view-all-button {
     margin-top: 10px;
+    font-family: Ownglyph_kimkonghae;
 }
 
 .button-container > .download-button {
