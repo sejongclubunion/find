@@ -527,5 +527,8 @@ button:hover {
         position: relative;
         top: 5%;
     }
+    .result-image {
+        margin-top: 10px;
+    }
 }
 
