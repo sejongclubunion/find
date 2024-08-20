@@ -134,8 +134,8 @@ body {
     overflow-y: auto;
 }
 #result-image {
-    width: 50%; /* 이미지 크기를 50%로 축소 */
     margin: 0 auto;
+    display: block;
 }
 
 .result-image {
