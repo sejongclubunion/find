@@ -30,14 +30,14 @@
         }
 
         .container {
-            width: 340px;
+            width: 100vw;
             height: 100vh;
             background: url('/src/page_cover.png') no-repeat center center;
-            background-size: contain;
+            background-size: contain; /* 배경 이미지를 화면에 맞게 조정 */
             display: flex;
             flex-direction: column;
-            justify-content: center; /* 세로 가운데 정렬 */
-            align-items: center; /* 가로 가운데 정렬 */
+            justify-content: center;
+            align-items: center;
             color: white;
             text-align: center;
             transition: transform 1s ease-in-out;
@@ -62,9 +62,9 @@
             border-radius: 12px;
             max-width: 300px;
             margin: 0 auto;
-            justify-content: center; /* 가로 가운데 정렬 */
-            align-items: center; /* 세로 가운데 정렬 */
-            margin-bottom: 10px; /* 버튼을 위로 10px 이동 */
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 10px;
         }
 
         .bottom-content {
@@ -92,7 +92,8 @@
             }
 
             .container {
-                background-size: cover; /* 화면에 꽉 차도록 설정 */
+                background-size: contain; /* 배경 이미지가 잘리지 않도록 설정 */
+                background-position: center center;
                 padding: 10px;
             }
         }
