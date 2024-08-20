@@ -107,25 +107,27 @@
         }
 
         @media (max-width: 844px) {
-            body, .container {
-                width: 100vw;
-                min-height: 100vh;
-                background-color: white;
-            }
+    body, .container {
+        width: 100vw;
+        min-height: 100vh;
+        background-color: white;
+        overflow-y: auto; /* 오버플로우를 허용하여 잘림 방지 */
+    }
 
-            .container {
-                background-size: cover;
-                background-position: center;
-                overflow-y: auto;
-            }
+    .container {
+        background-size: contain; /* 이미지가 잘리지 않도록 조정 */
+        background-position: center center; /* 이미지가 중앙에 위치하도록 설정 */
+        background-repeat: no-repeat; /* 이미지 반복 방지 */
+    }
 
-            .number-text {
-                font-family: 'Galmuri9', sans-serif;
-                font-size: 50px;
-                color: black;
-                margin-bottom: 100px;
-            }
-        }
+    .number-text {
+        font-family: 'Galmuri9', sans-serif;
+        font-size: 50px;
+        color: black;
+        margin-bottom: 100px; /* 여백 조정 */
+    }
+}
+
     </style>
 </head>
 <body>
