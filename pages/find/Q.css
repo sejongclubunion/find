@@ -134,7 +134,7 @@ body {
     overflow-y: auto;
 }
 #result-image {
-    margin: 0 auto;
+    margin-top: 40px
     display: block;
 }
 
