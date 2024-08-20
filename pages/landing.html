@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+    <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-2DT98SP3F3"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-    
       gtag('config', 'G-2DT98SP3F3');
     </script>
     
+    <!-- Microsoft Clarity -->
     <script type="text/javascript">
         (function(c,l,a,r,i,t,y){
             c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
@@ -17,6 +18,7 @@
             y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
         })(window, document, "clarity", "script", "npikttv2x5");
     </script>
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>총동아리연합회</title>
@@ -26,6 +28,7 @@
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="/pages/style2.css">
     <style>
+        /* 글꼴 설정 */
         @font-face {
             font-family: 'Galmuri9';
             src: url('/src/Galmuri9.ttf') format('truetype');
@@ -33,6 +36,14 @@
             font-style: normal;
         }
 
+        /* 기본 스타일 초기화 */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* 바디 스타일 */
         body {
             margin: 0;
             font-family: Arial, sans-serif;
@@ -41,7 +52,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            overflow: auto;
+            overflow: hidden;
             flex-direction: column;
             -webkit-user-select: none;
             -moz-user-select: none;
@@ -49,8 +60,9 @@
             user-select: none;
         }
 
+        /* 컨테이너 스타일 */
         .container {
-            width: 100vw;
+            width: 100%; /* 100vw 대신 100% 사용 */
             height: 100vh;
             background: url('/src/page_cover2.png') no-repeat center center;
             background-size: cover;
@@ -63,6 +75,7 @@
             transition: transform 1s ease-in-out;
         }
 
+        /* 버튼 스타일 */
         .button {
             background-color: var(--color-primary);
             border: none;
@@ -79,6 +92,7 @@
             margin-bottom: 10px;
         }
 
+        /* 하단 콘텐츠 스타일 */
         .bottom-content {
             position: absolute;
             bottom: 20px;
@@ -86,6 +100,7 @@
             text-align: center;
         }
 
+        /* 텍스트 스타일 */
         .number-text {
             font-family: 'Galmuri9', sans-serif;
             font-size: 50px;
@@ -100,34 +115,35 @@
             opacity: 0;
         }
 
+        /* 그라데이션 텍스트 효과 */
         .gradient-effect-text {
             background: linear-gradient(90deg, #f3ec78, #af4261);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
+        /* 미디어 쿼리 */
         @media (max-width: 844px) {
-    body, .container {
-        width: 100vw;
-        min-height: 100vh;
-        background-color: white;
-        overflow-y: auto; /* 오버플로우를 허용하여 잘림 방지 */
-    }
+            body, .container {
+                width: 100%; /* 100vw 대신 100% 사용 */
+                min-height: 100vh;
+                background-color: white;
+                overflow-y: auto;
+            }
 
-    .container {
-        background-size: contain; /* 이미지가 잘리지 않도록 조정 */
-        background-position: center center; /* 이미지가 중앙에 위치하도록 설정 */
-        background-repeat: no-repeat; /* 이미지 반복 방지 */
-    }
+            .container {
+                background-size: contain; /* 이미지가 잘리지 않도록 조정 */
+                background-position: center center;
+                background-repeat: no-repeat;
+            }
 
-    .number-text {
-        font-family: 'Galmuri9', sans-serif;
-        font-size: 50px;
-        color: black;
-        margin-bottom: 100px; /* 여백 조정 */
-    }
-}
-
+            .number-text {
+                font-family: 'Galmuri9', sans-serif;
+                font-size: 50px;
+                color: black;
+                margin-bottom: 100px; /* 여백 조정 */
+            }
+        }
     </style>
 </head>
 <body>
