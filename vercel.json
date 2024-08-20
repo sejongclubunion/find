@@ -1,6 +1,10 @@
 {
   "rewrites": [
     {
+      "source": "/landing",
+      "destination": "/landing.html"
+    },
+    {
       "source": "/landing/(.*)",
       "destination": "/pages/landing.html"
     },
@@ -11,10 +15,6 @@
     {
       "source": "/find",
       "destination": "/pages/find/Q.html"
-    },
-    {
-      "source": "/landing",
-      "destination": "/landing.html"
     },
     {
       "source": "/culture",
