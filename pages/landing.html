@@ -10,6 +10,13 @@
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="/pages/style2.css">
     <style>
+        @font-face {
+            font-family: 'Galmuri9';
+            src: url('/src/Galmuri9.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
         body {
             margin: 0;
             font-family: Arial, sans-serif;
@@ -71,9 +78,9 @@
 
         .number-text {
             font-family: 'Galmuri9', sans-serif;
-            font-size: 24px;
-            color: white;
-            margin-bottom: 10px;
+            font-size: 50px;
+            color: black;
+            margin-bottom: 175px;
         }
 
         @media (max-width: 768px) {
@@ -92,12 +99,12 @@
 </head>
 <body>
     <div class="container" id="container">
-        <button class="button" id="findClubButton">내게 맞는 동아리 찾기</button>
+        <button class="button" id="findClubButton"></button>
     </div>
 
     <div class="bottom-content">
         <div class="number-text">1234</div>
-        <button class="button" id="shareButton">URL 공유하기</button>
+        <button class="button" id="shareButton"></button>
     </div>
 
     <script>
