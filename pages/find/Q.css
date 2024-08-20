@@ -64,7 +64,7 @@ body {
 }
 
 .progress-text {
-    font-size: 1em;
+    font-size: 1.4em;
     color: #333;
     font-weight: bold;
     margin-left: 10px;
@@ -145,14 +145,14 @@ body {
 }
 
 .result-text {
-    font-size: 1.5em;
+    font-size: 2.1em;
     margin-bottom: 10px;
     font-weight: bold;
     font-family: Ownglyph_kimkonghae;
 }
 
 .description-text {
-    font-size: 1em;
+    font-size: 1.3em;
     margin-bottom: 20px;
     font-family: Ownglyph_kimkonghae;
 }
