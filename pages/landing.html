@@ -31,11 +31,11 @@
             -moz-user-select: none;
             -ms-user-select: none;
             user-select: none;
-        }
+    }
 
         .container {
             width: 100vw;
-            height: 100vw;
+            height: 100vh;
             background: url('/src/page_cover2.png') no-repeat center center;
             background-size: cover;
             display: flex;
@@ -86,7 +86,7 @@
         @media (max-width: 844px) {
             body, .container {
                 width: 100vw;
-                height: 100vh;
+                min-height: 100vh;
                 background-color: white;
             }
 
