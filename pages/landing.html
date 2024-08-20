@@ -70,7 +70,7 @@
 
         /* 컨테이너 스타일 */
         .container {
-            width: 100vw;
+            width: 100%;
             height: 100vh;
             background: url('/src/page_cover2.png') no-repeat center center;
             background-size: cover;
@@ -81,6 +81,7 @@
             color: white;
             text-align: center;
             transition: transform 1s ease-in-out;
+            overflow: auto; /* 이미지가 넘칠 경우 스크롤을 허용 */
         }
 
         /* 버튼 스타일 */
@@ -133,7 +134,7 @@
         /* 미디어 쿼리 */
         @media (max-width: 844px) {
             body, .container {
-                width: 100vw;
+                width: 100%;
                 min-height: 100vh;
                 background-color: white;
                 overflow-y: auto;
