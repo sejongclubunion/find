@@ -498,6 +498,11 @@ async function loadNotionData(subCategory) {
                 applicationButton.style.backgroundColor = '#F2A0B0';
                 applicationButton.style.color = 'white';
                 applicationButton.onclick = () => window.open(applicationUrl, '_blank');
+            } else if (new Date() > new Date(endDate)) { // 모집 마감일이 지났을 때
+                applicationButton.textContent = '모집마감';
+                applicationButton.style.backgroundColor = 'gray';
+                applicationButton.style.color = 'white';
+                applicationButton.disabled = true; // 버튼 비활성화
             } else {
                 const daysLeft = calculateDaysLeft(startDate);
                 applicationButton.textContent = `D-${daysLeft}`;
@@ -506,6 +511,7 @@ async function loadNotionData(subCategory) {
                 applicationButton.style.border = '1px solid #F2A0B0';
                 applicationButton.onclick = () => showPopup(`${daysLeft}일 뒤에 지원 가능합니다!`, clubName.textContent);
             }
+        
 
             const curriculum = document.createElement('div');
             curriculum.className = 'curriculum-bar-container';

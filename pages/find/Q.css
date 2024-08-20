@@ -130,7 +130,12 @@ body {
 }
 
 .result-container.show-content {
-    margin-top: 0;
+    max-height: 60%;
+    overflow-y: auto;
+}
+#result-image {
+    width: 50%; /* 이미지 크기를 50%로 축소 */
+    margin: 0 auto;
 }
 
 .result-image {
@@ -530,7 +535,7 @@ button:hover {
         top: 5%;
     }
     .result-image {
-        margin-top: 20px;
+        margin-top: 30px;
     }
 }
 
