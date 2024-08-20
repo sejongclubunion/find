@@ -101,12 +101,12 @@
 </head>
 <body>
     <div class="container" id="container">
-        <button class="button" id="findClubButton"></button>
+        <button class="button" id="findClubButton">Find Club</button>
     </div>
 
     <div class="bottom-content">
-        <div class="number-text">123?23?숫자 뭐 하지</div>
-        <button class="button" id="shareButton"></button>
+        <div class="number-text">1234</div>
+        <button class="button" id="shareButton">Share</button>
     </div>
 
     <script>
@@ -120,6 +120,7 @@
                 container.style.transform = 'translateY(-100vh)';
                 
                 setTimeout(() => {
+                    container.style.display = 'none'; // 애니메이션 후에 container를 숨김
                     window.location.href = '/find';
                 }, 1000); // 애니메이션 시간과 일치하도록 설정
             });
