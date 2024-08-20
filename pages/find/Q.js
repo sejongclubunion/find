@@ -1,6 +1,6 @@
 const questions = [
     {
-        "question": "수업이 갑자기 두개나 휴강됐을때 나는?",
+        "question": "수업이 갑자기<br> 두개나 휴강됐을때 나는?",
         "options": [
             {"answer": "보고싶었던 영화를 보러간다", "weight": {"문화": 1}},
             {"answer": "근처 북카페에 가서 책을 읽는다", "weight": {"학술": 1}},
@@ -10,7 +10,7 @@ const questions = [
         ]
     },
     {
-        "question": "곧 개강인데,, 남은 방학동안 이것만은 꼭 하고 만다! 최근 나의 관심사는?",
+        "question": "곧 개강인데,, 남은 방학동안 이것만은<br> 꼭 하고 만다! 최근 나의 관심사는?",
         "options": [
             {"answer": "학점,자기개발,갓생", "weight": {"학술": 1}},
             {"answer": "액티비티", "weight": {"체육": 1}},
@@ -30,7 +30,7 @@ const questions = [
         ]
     },
     {
-        "question": "지긋지긋한 시험기간.. 딴짓하고 싶은데 어떤 걸 하면 좋을까?",
+        "question": "지긋지긋한 시험기간..<br> 딴짓하고 싶은데 어떤 걸 하면 좋을까?",
         "options": [
             {"answer": "신나는 유튜브 플리로 기분전환", "weight": {"문화": 1}},
             {"answer": "종교 활동", "weight": {"종교": 1}},
@@ -40,7 +40,7 @@ const questions = [
         ]
     },
     {
-        "question": "수강 신청 마감 5분전, 수강 여석이 하나씩 남았다! 수강할 과목은?",
+        "question": "수강 신청 마감 5분전,<br> 수강 여석이 하나씩 남았다! 수강할 과목은?",
         "options": [
             {"answer": "성(性)과 문화", "weight": {"문화": 1}},
             {"answer": "채플", "weight": {"종교": 1}},
@@ -50,7 +50,7 @@ const questions = [
         ]
     },
     {
-        "question": "제일 친한 동기는 나를 어떻게 생각하고 있을까?",
+        "question": "제일 친한 동기는<br> 나를 어떻게 생각하고 있을까?",
         "options": [
             {"answer": "스펙쌓기에 진심인 사람", "weight": {"학술": 1}},
             {"answer": "활동적인 사람", "weight": {"체육": 1}},
@@ -94,14 +94,14 @@ const subCategoryQuestions = {
             ]
         },
         {
-            "question": "문화 활동 중 가장 기억에 남는 경험은 무엇인가요?",
+            "question": "문화 활동 중 가장 기억에<br> 남는 경험은 무엇인가요?",
             "options": [
                 {"answer": "작품 전시회 참여", "weight": {"창작예술": 1}},
                 {"answer": "문화 축제 참석", "weight": {"문화": 1}}
             ]
         },
         {
-            "question": "문화 활동을 통해 얻고 싶은 것은 무엇인가요?",
+            "question": "문화 활동을 통해<br> 얻고 싶은 것은 무엇인가요?",
             "options": [
                 {"answer": "개인적 창의력과 표현력 향상", "weight": {"창작예술": 1}},
                 {"answer": "다양한 문화 체험과 사회적 연결", "weight": {"문화": 1}}
@@ -142,7 +142,7 @@ const subCategoryQuestions = {
     // ],
     '체육': [
         {
-            "question": "체육 활동을 선택할 때 가장 중요한 요소는 무엇인가요?",
+            "question": "체육 활동을 선택할 때<br> 가장 중요한 요소는 무엇인가요?",
             "options": [
                 {"answer": "팀과의 협력", "weight": {"구기체육": 1}},
                 {"answer": "개인적 도전", "weight": {"생활체육": 1}},
@@ -150,7 +150,7 @@ const subCategoryQuestions = {
             ]
         },
         {
-            "question": "체육 활동을 통해 얻고 싶은 신체적 변화는 무엇인가요?",
+            "question": "체육 활동을 통해 얻고 싶은<br> 신체적 변화는 무엇인가요?",
             "options": [
                 {"answer": "근력과 팀워크 향상", "weight": {"구기체육": 1}},
                 {"answer": "지구력과 체력 향상", "weight": {"생활체육": 1}},
@@ -158,7 +158,7 @@ const subCategoryQuestions = {
             ]
         },
         {
-            "question": "체육 활동을 할 때 가장 중요하게 생각하는 것은 무엇인가요?",
+            "question": "체육 활동을 할 때<br> 가장 중요하게 생각하는 것은 무엇인가요?",
             "options": [
                 {"answer": "전략과 기술", "weight": {"구기체육": 1}},
                 {"answer": "운동의 즐거움", "weight": {"생활체육": 1}},
@@ -168,21 +168,21 @@ const subCategoryQuestions = {
     ],
     '학술': [
         {
-            "question": "학술 활동을 통해 가장 얻고 싶은 것은 무엇인가요?",
+            "question": "학술 활동을 통해<br> 가장 얻고 싶은 것은 무엇인가요?",
             "options": [
                 {"answer": "기술적 숙련도", "weight": {"정보과학": 1}},
                 {"answer": "폭 넓은 탐구", "weight": {"학술교양": 1}}
             ]
         },
         {
-            "question": "학술 활동 중 어떤 환경에서 가장 효율적으로 공부하나요?",
+            "question": "학술 활동 중 어떤 환경에서<br> 가장 효율적으로 공부하나요?",
             "options": [
                 {"answer": "조용하고 집중된 환경", "weight": {"정보과학": 1}},
                 {"answer": "서로 의견을 교환할 수 있는 환경", "weight": {"학술교양": 1}}
             ]
         },
         {
-            "question": "학술 활동을 통해 배우고 싶은 기술이나 지식은 무엇인가요?",
+            "question": "학술 활동을 통해 배우고<br> 싶은 기술이나 지식은 무엇인가요?",
             "options": [
                 {"answer": "알고리즘과 데이터 구조", "weight": {"정보과학": 1}},
                 {"answer": "비판적 사고와 분석", "weight": {"학술교양": 1}}
