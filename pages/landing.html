@@ -62,18 +62,21 @@
 
         /* 컨테이너 스타일 */
         .container {
-            width: 100%; /* 100vw 대신 100% 사용 */
-            height: 100vh;
-            background: url('/src/page_cover2.png') no-repeat center center;
-            background-size: cover;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            text-align: center;
-            transition: transform 1s ease-in-out;
-        }
+    width: 100%; /* 100vw 대신 100% 사용 */
+    max-width: 340px; /* 배경 이미지의 실제 폭으로 설정 */
+    height: 100vh;
+    background: url('/src/page_cover2.png') no-repeat center center;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+    transition: transform 1s ease-in-out;
+    margin: 0 auto; /* 중앙 정렬을 위해 추가 */
+}
+
 
         /* 버튼 스타일 */
         .button {
