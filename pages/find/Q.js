@@ -10,7 +10,7 @@ const questions = [
         ]
     },
     {
-        "question": "곧 개강인데,, 남은 방학동안 이것만은<br> 꼭 하고 만다! 최근 나의 관심사는?",
+        "question": "곧 개강인데,, 남은 방학동안<br> 이것만은 꼭 하고 만다!<br> 최근 나의 관심사는?",
         "options": [
             {"answer": "학점,자기개발,갓생", "weight": {"학술": 1}},
             {"answer": "액티비티", "weight": {"체육": 1}},
@@ -30,7 +30,7 @@ const questions = [
         ]
     },
     {
-        "question": "지긋지긋한 시험기간..<br> 딴짓하고 싶은데 어떤 걸 하면 좋을까?",
+        "question": "지긋지긋한 시험기간..<br> 딴짓하고 싶은데<br> 어떤 걸 하면 좋을까?",
         "options": [
             {"answer": "신나는 유튜브 플리로 기분전환", "weight": {"문화": 1}},
             {"answer": "종교 활동", "weight": {"종교": 1}},
@@ -40,7 +40,7 @@ const questions = [
         ]
     },
     {
-        "question": "수강 신청 마감 5분전,<br> 수강 여석이 하나씩 남았다! 수강할 과목은?",
+        "question": "수강 신청 마감 5분전,<br> 수강 여석이 하나씩 남았다!<br> 수강할 과목은?",
         "options": [
             {"answer": "성(性)과 문화", "weight": {"문화": 1}},
             {"answer": "채플", "weight": {"종교": 1}},
@@ -64,21 +64,21 @@ const questions = [
 const subCategoryQuestions = {
     '공연': [
         {
-            "question": "공연에서 어떤 역할을 하고 싶나요?",
+            "question": "공연에서 어떤 역할을<br> 하고 싶나요?",
             "options": [
                 {"answer": "노래 부르기", "weight": {"음악연주": 1}},
                 {"answer": "공연(춤, 연극)", "weight": {"공연예술": 1}}
             ]
         },
         {
-            "question": "공연 후 어떤 성취감을 느낄 것 같나요?",
+            "question": "공연 후 어떤 성취감을<br> 느낄 것 같나요?",
             "options": [
                 {"answer": "함께 만든 노력의 결과물", "weight": {"음악연주": 1}},
                 {"answer": "연습의 결과를 무대에서 실현", "weight": {"공연예술": 1}}
             ]
         },
         {
-            "question": "더 선호하는 공연 장소는 어디인가요?",
+            "question": "더 선호하는 공연 장소는<br> 어디인가요?",
             "options": [
                 {"answer": "길거리 버스킹, 광장", "weight": {"음악연주": 1}},
                 {"answer": "무대, 공연장", "weight": {"공연예술": 1}}
@@ -87,7 +87,7 @@ const subCategoryQuestions = {
     ],
     '문화': [
         {
-            "question": "어떤 종류의 문화 활동을 좋아하나요?",
+            "question": "어떤 종류의 문화 활동을<br> 좋아하나요?",
             "options": [
                 {"answer": "스스로 탐구하는 문화 활동", "weight": {"창작예술": 1}},
                 {"answer": "다른 사람들과 어울리는 문화 활동", "weight": {"문화": 1}}
@@ -182,7 +182,7 @@ const subCategoryQuestions = {
             ]
         },
         {
-            "question": "학술 활동을 통해 배우고<br> 싶은 기술이나 지식은 무엇인가요?",
+            "question": "학술 활동을 통해<br> 배우고 싶은 기술이나 지식은<br> 무엇인가요?",
             "options": [
                 {"answer": "알고리즘과 데이터 구조", "weight": {"정보과학": 1}},
                 {"answer": "비판적 사고와 분석", "weight": {"학술교양": 1}}
