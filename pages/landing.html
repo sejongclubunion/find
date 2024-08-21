@@ -203,7 +203,7 @@
             async function fetchVisitorCount() {
                 try {
                     // API에서 방문자 수 데이터를 가져옴
-                    const response = await fetch('/pages/api/visitorCount.js');
+                    const response = await fetch('/api/visitorCount.js');
                     const data = await response.json();
 
                     // 방문자 수를 numberText 요소에 표시
