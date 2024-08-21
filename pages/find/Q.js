@@ -420,18 +420,19 @@ function downloadScreenshot() {
         button.style.color = computedStyle.color;
         button.style.border = computedStyle.border;
         button.style.padding = computedStyle.padding;
-        // 필요에 따라 추가적인 스타일 속성도 설정 가능
     });
 
     html2canvas(document.body, {
         useCORS: true, // 외부 이미지 리소스 문제가 있을 경우 사용
         backgroundColor: null // 배경색을 투명하게 설정하려면 null로 설정
     }).then(canvas => {
+        // 스크린샷 생성이 성공한 경우
         const link = document.createElement('a');
         link.href = canvas.toDataURL('image/png');
         link.download = 'screenshot.png';
         link.click();
     }).catch(error => {
+        // 스크린샷 생성이 실패한 경우
         console.error('Screenshot download failed:', error);
         showDownloadFailedPopup(); // 다운로드 실패 시 작은 팝업 표시
     });
@@ -443,7 +444,7 @@ function showDownloadFailedPopup() {
     // 작은 팝업 생성
     const popup = document.createElement('div');
     popup.className = 'download-failed-popup';
-    popup.innerText = '카카오톡 브라우저에서는 다운로드가 불가능해요, 스크린샷을 해서 이벤트에 참여해주세요!';
+    popup.innerText = '다운로드에 실패했습니다. 스크린샷을 찍어주세요!';
 
     // 팝업을 다운로드 버튼 옆에 위치시킴
     const buttonRect = downloadButton.getBoundingClientRect();
@@ -458,6 +459,7 @@ function showDownloadFailedPopup() {
         document.body.removeChild(popup);
     }, 3000);
 }
+
 
 
 
