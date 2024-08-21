@@ -440,6 +440,12 @@ button:hover {
     width: 100%;
     text-align: center;
 }
+.info-text{
+    font-size: 0.9em;
+    color: #555;
+    margin-top: 10px;
+    white-space: pre-line;
+}
 
 @media (min-width: 600px) {
     .list-item {
