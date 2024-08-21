@@ -50,7 +50,7 @@ const questions = [
         ]
     },
     {
-        "question": "제일 친한 동기는<br> 나를 어떻게 생각하고 있을까?",
+        "question": "제일 친한 동기는 나를<br> 어떻게 생각하고 있을까?",
         "options": [
             {"answer": "스펙쌓기에 진심인 사람", "weight": {"학술": 1}},
             {"answer": "활동적인 사람", "weight": {"체육": 1}},
