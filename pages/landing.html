@@ -191,6 +191,16 @@
             // 유저 토큰 생성 (간단한 예시)
             const userToken = Math.random().toString(36).substr(2, 9);
 
+            // 애니메이션 효과 함수
+            function startAnimation() {
+                return setInterval(() => {
+                    numberText.textContent = Math.floor(Math.random() * 1000);
+                }, 50); // 50ms마다 숫자 변경
+            }
+
+            // 애니메이션 시작
+            let animationInterval = startAnimation();
+
             // 방문자 수를 API에서 가져와 표시하는 함수
             async function fetchVisitorCount() {
                 const browser = navigator.userAgent; // 브라우저 정보.
@@ -205,8 +215,11 @@
                         body: JSON.stringify({ browser, timestamp, userToken }),
                     });
                     const data = await response.json();
+
+                    clearInterval(animationInterval); // 애니메이션 중지
                     numberText.textContent = data.count;
                 } catch (error) {
+                    clearInterval(animationInterval); // 애니메이션 중지
                     console.error('Error fetching visitor count:', error);
                     numberText.textContent = 'Error'; // 에러 발생 시 표시할 텍스트
                 }
