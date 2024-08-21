@@ -4,7 +4,7 @@ const { Client } = require('@notionhq/client');
 const NOTION_API_KEY = 'secret_tJNk9yiO1tinhEa5lOpgMx4ZFdwByKSnN99GBxKs47A';
 const DATABASE_ID = '4e2211ed9d774236822192d9313c7c51';
 
-// 노션 클라이언트를 초기화합니다.
+// 노션 클라이언트를 초기화합니다..
 const notion = new Client({ auth: NOTION_API_KEY });
 
 export default async function handler(req, res) {
