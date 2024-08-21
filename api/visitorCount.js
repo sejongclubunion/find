@@ -7,7 +7,7 @@ const DATABASE_ID = '4e2211ed9d774236822192d9313c7c51';
 // 노션 클라이언트를 초기화합니다.
 const notion = new Client({ auth: NOTION_API_KEY });
 
-module.exports = async function handler(req, res) {
+export default async function handler(req, res) {
   // CORS 설정을 추가합니다.
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
@@ -31,7 +31,7 @@ module.exports = async function handler(req, res) {
           title: [{ type: 'text', text: { content: browser } }]
         },
         'timestamp': {
-          rich_text: [{ type: 'text', text: { content: timestamp } }]
+          date: { start: timestamp }  // date 형식으로 변경
         },
         'user token': {
           rich_text: [{ type: 'text', text: { content: userToken } }]
