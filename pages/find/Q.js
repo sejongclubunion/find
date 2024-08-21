@@ -462,7 +462,7 @@ function showDownloadFailedPopup() {
         if (popup) {
             document.body.removeChild(popup);
         }
-    }, 3000);
+    }, 4500);
 }
 
 
