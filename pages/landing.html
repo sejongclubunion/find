@@ -45,15 +45,14 @@
 
         html, body {
             max-width: 340px;
-            margin: 0 auto; /* 중앙 정렬을 위해 추가 */
+            margin: 0 auto;
             padding: 0;
             width: 100%;
             height: 100%;
-            overflow-x: hidden; /* 가로 스크롤 방지 */
-            overflow-y: auto; /* 세로 스크롤 허용 */
+            overflow-x: hidden;
+            overflow-y: auto;
         }
 
-        /* 바디 스타일 */
         body {
             max-width: 340px;
             margin: 0;
@@ -65,16 +64,12 @@
             height: 100vh;
             overflow: hidden;
             flex-direction: column;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
             user-select: none;
         }
 
-        /* 컨테이너 스타일 */
         .container {
             width: 100%; 
-            max-width: 340px; /* 배경 이미지의 실제 폭으로 설정 */
+            max-width: 340px;
             height: 100vh;
             background: url('/src/page_cover2.png') no-repeat center center;
             background-size: cover;
@@ -85,10 +80,9 @@
             color: white;
             text-align: center;
             transition: transform 1s ease-in-out;
-            margin: 0 auto; /* 중앙 정렬을 위해 추가 */
+            margin: 0 auto;
         }
 
-        /* 버튼 스타일 */
         .button {
             background-color: var(--color-primary);
             border: none;
@@ -102,16 +96,14 @@
             margin: 0 auto;
             justify-content: center;
             align-items: center;
-            /* margin-bottom: 10px; */
             margin-top: 200px;
         }
 
-        /* 텍스트 스타일 */
         .number-text {
             font-family: 'Galmuri9', sans-serif;
             font-size: 100px;
             color: black;
-            margin-top: 80px; /* 버튼 아래 50px 위치 */
+            margin-top: 80px;
             opacity: 1;
             transition: all 1s ease;
             max-width: 340px;
@@ -123,7 +115,6 @@
             opacity: 0;
         }
 
-        /* 하단 콘텐츠 스타일 */
         .bottom-content {
             display: flex;
             justify-content: center;
@@ -137,7 +128,6 @@
             height: 0px;
         }
 
-        /* 그라데이션 텍스트 효과 */
         .gradient-effect-text {
             background: linear-gradient(90deg, #f3ec78, #af4261);
             -webkit-background-clip: text;
@@ -149,17 +139,16 @@
             border-radius: 12px;
         }
 
-        /* 미디어 쿼리 */
         @media (max-width: 844px) {
             body, .container {
-                width: 100%; /* 100vw 대신 100% 사용 */
+                width: 100%;
                 min-height: 100vh;
                 background-color: white;
                 overflow-y: auto;
             }
 
             .container {
-                background-size: contain; /* 이미지가 잘리지 않도록 조정 */
+                background-size: contain;
                 background-position: center center;
                 background-repeat: no-repeat;
             }
@@ -168,7 +157,7 @@
                 font-family: 'Galmuri9', sans-serif;
                 font-size: 50px;
                 color: black;
-                margin-bottom: 100px; /* 여백 조정 */
+                margin-bottom: 100px;
             }
         }
 
@@ -176,8 +165,8 @@
             html, body {
                 transform: scale(1.1);
                 transform-origin: top center;
-                overflow-y: auto; /* 세로 스크롤 허용 */
-                overflow-x: hidden; /* 가로 스크롤 방지 */
+                overflow-y: auto;
+                overflow-x: hidden;
             }
         }
     </style>
@@ -185,7 +174,7 @@
 <body>
     <div class="container" id="container">
         <button class="button" id="findClubButton"></button>
-        <div class="number-text" id="numberText">1234</div> <!-- findClubButton 바로 아래에 위치 -->
+        <div class="number-text" id="numberText">1234</div>
     </div>
 
     <div class="bottom-content">
@@ -199,20 +188,29 @@
             const container = document.getElementById('container');
             const numberText = document.getElementById('numberText');
 
+            // 유저 토큰 생성 (간단한 예시)
+            const userToken = Math.random().toString(36).substr(2, 9);
+
             // 방문자 수를 API에서 가져와 표시하는 함수
             async function fetchVisitorCount() {
-    try {
-        const response = await fetch('/api/visitorCount');
-        const text = await response.text(); // 응답을 텍스트로 가져옴
-        console.log('API 응답:', text); // 응답 확인
-        const data = JSON.parse(text); // JSON으로 파싱
-        numberText.textContent = data.count;
-    } catch (error) {
-        console.error('Error fetching visitor count:', error);
-        numberText.textContent = 'Error'; // 에러 발생 시 표시할 텍스트
-    }
-}
+                const browser = navigator.userAgent; // 브라우저 정보
+                const timestamp = new Date().toISOString(); // 현재 타임스탬프
 
+                try {
+                    const response = await fetch('/api/visitorCount', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ browser, timestamp, userToken }),
+                    });
+                    const data = await response.json();
+                    numberText.textContent = data.count;
+                } catch (error) {
+                    console.error('Error fetching visitor count:', error);
+                    numberText.textContent = 'Error'; // 에러 발생 시 표시할 텍스트
+                }
+            }
 
             // 페이지가 로드될 때 방문자 수를 가져와 표시
             fetchVisitorCount();
