@@ -433,8 +433,32 @@ function downloadScreenshot() {
         link.click();
     }).catch(error => {
         console.error('Screenshot download failed:', error);
+        showDownloadFailedPopup(); // 다운로드 실패 시 작은 팝업 표시
     });
 }
+
+function showDownloadFailedPopup() {
+    const downloadButton = document.querySelector('.download-button');
+
+    // 작은 팝업 생성
+    const popup = document.createElement('div');
+    popup.className = 'download-failed-popup';
+    popup.innerText = '카카오톡 브라우저에서는 다운로드가 불가능해요, 스크린샷을 해서 이벤트에 참여해주세요!';
+
+    // 팝업을 다운로드 버튼 옆에 위치시킴
+    const buttonRect = downloadButton.getBoundingClientRect();
+    popup.style.position = 'absolute';
+    popup.style.top = `${buttonRect.top}px`;
+    popup.style.left = `${buttonRect.right + 10}px`;
+
+    document.body.appendChild(popup);
+
+    // 3초 후 팝업 제거
+    setTimeout(() => {
+        document.body.removeChild(popup);
+    }, 3000);
+}
+
 
 
 // **수정된 부분 끝**
