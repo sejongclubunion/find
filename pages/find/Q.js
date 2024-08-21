@@ -412,53 +412,59 @@ async function displayResults(subCategory) {
 
 // 스크린샷 다운로드 함수 추가
 function downloadScreenshot() {
-    // 버튼의 상태를 명시적으로 설정
-    const buttons = document.querySelectorAll('button');
-    buttons.forEach(button => {
-        const computedStyle = window.getComputedStyle(button);
-        button.style.backgroundColor = computedStyle.backgroundColor;
-        button.style.color = computedStyle.color;
-        button.style.border = computedStyle.border;
-        button.style.padding = computedStyle.padding;
-    });
+    // 카카오톡 인앱 브라우저인지 확인
+    const isKakaoInAppBrowser = /KAKAOTALK/i.test(navigator.userAgent);
 
-    html2canvas(document.body, {
-        useCORS: true, // 외부 이미지 리소스 문제가 있을 경우 사용
-        backgroundColor: null // 배경색을 투명하게 설정하려면 null로 설정
-    }).then(canvas => {
-        // 스크린샷 생성이 성공한 경우
-        const link = document.createElement('a');
-        link.href = canvas.toDataURL('image/png');
-        link.download = 'screenshot.png';
-        link.click();
-    }).catch(error => {
-        // 스크린샷 생성이 실패한 경우
-        console.error('Screenshot download failed:', error);
-        showDownloadFailedPopup(); // 다운로드 실패 시 작은 팝업 표시
-    });
+    if (isKakaoInAppBrowser) {
+        // 카카오톡 인앱 브라우저인 경우, 다운로드 불가 안내 팝업 표시
+        showDownloadFailedPopup();
+    } else {
+        // 다른 브라우저에서는 정상적으로 다운로드 시도
+        html2canvas(document.body, {
+            useCORS: true, // 외부 이미지 리소스 문제가 있을 경우 사용
+            backgroundColor: null // 배경색을 투명하게 설정하려면 null로 설정
+        }).then(canvas => {
+            const link = document.createElement('a');
+            link.href = canvas.toDataURL('image/png');
+            link.download = 'screenshot.png';
+            link.click();
+        }).catch(error => {
+            console.error('Screenshot download failed:', error);
+            showDownloadFailedPopup(); // 다운로드 실패 시 작은 팝업 표시
+        });
+    }
 }
 
 function showDownloadFailedPopup() {
     const downloadButton = document.querySelector('.download-button');
 
+    // 기존 팝업이 있는지 확인하고 제거
+    const existingPopup = document.querySelector('.download-failed-popup');
+    if (existingPopup) {
+        document.body.removeChild(existingPopup);
+    }
+
     // 작은 팝업 생성
     const popup = document.createElement('div');
     popup.className = 'download-failed-popup';
-    popup.innerText = '다운로드에 실패했습니다. 스크린샷을 찍어주세요!';
+    popup.innerText = '카카오톡 인앱 브라우저에서는 다운로드가 불가능합니다. 다른 브라우저에서 시도하거나, 스크린샷을 찍어주세요.';
 
     // 팝업을 다운로드 버튼 옆에 위치시킴
     const buttonRect = downloadButton.getBoundingClientRect();
     popup.style.position = 'absolute';
-    popup.style.top = `${buttonRect.top}px`;
-    popup.style.left = `${buttonRect.right + 10}px`;
+    popup.style.top = `${window.scrollY + buttonRect.top}px`; // 스크롤을 고려하여 위치 설정
+    popup.style.left = `${buttonRect.left}px`;
 
     document.body.appendChild(popup);
 
     // 3초 후 팝업 제거
     setTimeout(() => {
-        document.body.removeChild(popup);
+        if (popup) {
+            document.body.removeChild(popup);
+        }
     }, 3000);
 }
+
 
 
 
