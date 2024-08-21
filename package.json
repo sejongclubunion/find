@@ -1,12 +1,12 @@
 {
-    "name": "notion-database-fetch",
-    "version": "1.0.0",
-    "main": "index.js",
-    "scripts": {
-      "start": "node index.js"
-    },
-    "dependencies": {
-      "node-fetch": "^2.6.1"
-    }
+  "name": "notion-database-fetch",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@notionhq/client": "^2.2.15",
+    "node-fetch": "^2.6.1"
   }
-  
+}
