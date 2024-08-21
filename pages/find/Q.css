@@ -446,6 +446,13 @@ button:hover {
     margin-top: 10px;
     white-space: pre-line;
 }
+.close-icon {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    cursor: pointer;
+    font-size: 24px;
+}
 
 @media (min-width: 600px) {
     .list-item {

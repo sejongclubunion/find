@@ -628,9 +628,22 @@ function showPopup(message, clubName) {
     const popupContent = document.createElement('div');
     popupContent.className = 'popup-content';
 
+    // X 아이콘 추가
+    const closeIcon = document.createElement('span');
+    closeIcon.className = 'close-icon';
+    closeIcon.innerHTML = '&times;';
+    closeIcon.onclick = () => document.body.removeChild(popup);
+    popupContent.appendChild(closeIcon);
+
     const messageElement = document.createElement('p');
     messageElement.textContent = message;
     popupContent.appendChild(messageElement);
+
+// 추가된 작은 글씨
+const infoElement = document.createElement('p');
+infoElement.innerHTML = '전화번호를 입력해주시면 모집 시작일에 알림을 드릴게요!';
+infoElement.className = 'info-text';
+popupContent.appendChild(infoElement);
 
     // 전화번호 입력 칸 추가
     const phoneInput = document.createElement('input');
@@ -639,11 +652,7 @@ function showPopup(message, clubName) {
     phoneInput.className = 'phone-input';
     popupContent.appendChild(phoneInput);
 
-    // 추가된 작은 글씨
-    const infoElement = document.createElement('p');
-    infoElement.innerHTML = '전화번호를 입력해주시면 모집 시작일에 알림을 드릴게요!';
-    infoElement.className = 'info-text';
-    popupContent.appendChild(infoElement);
+    
 
     const closeButton = document.createElement('button');
     closeButton.textContent = '확인';
